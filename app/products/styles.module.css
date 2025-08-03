@@ -1,0 +1,35 @@
+.container {
+    z-index: 1;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+
+  position: relative;
+}
+
+.gridWrapper {
+  max-width: 1200px;
+  width: 100%;
+
+  position: absolute;
+  top: 20%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+  
+  .gridWrapper {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+}
