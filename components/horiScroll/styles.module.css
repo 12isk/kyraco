@@ -1,0 +1,23 @@
+.horiScrollContainer {
+    position: relative;
+    height: 300vh;
+    background-color: var(--color-background);
+}
+
+.scrollContainer {
+    height: 100vh;
+    /* background-color: #f0f0f0; */
+
+    position: sticky;
+    top: 0;
+    align-items: center;
+    display: flex;
+
+    overflow: hidden;
+}
+
+.scrollContent {
+    display: flex;
+    flex-direction: row;
+    gap: 4vw;
+}

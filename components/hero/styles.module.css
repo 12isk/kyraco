@@ -1,0 +1,63 @@
+@import url('../../css/satoshi.css');
+@import url('../../css/instrument.css');
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+
+}
+
+.heroImage{
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    object-fit: cover;
+    /* max-width: 600px; */
+    /* margin-bottom: 20px; */
+    filter: brightness(0.9);
+}
+
+.heroContent {
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+}
+
+.emph{
+    font-family: 'Instrument', sans-serif;
+    font-style: italic;
+    letter-spacing: -0.02em;
+}
+
+.heroTitle {
+    font-family: 'Satoshi-Medium', sans-serif;
+    font-size: 5rem;
+    /* font-weight: bold; */
+    letter-spacing: -0.05em;
+    /* margin-bottom: 20px; */
+    text-wrap: nowrap;
+    /* filter: brightness(1.5); */
+}
+
+.heroSubtitle {
+    font-family: 'Satoshi-Regular', sans-serif;
+    font-size: 1rem;
+    letter-spacing: -0.05em;
+    /* margin-bottom: 20px; */
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.heroButtonContainer {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    /* width: 6%; */
+    transform: translateX(-50%);
+    
+}
+

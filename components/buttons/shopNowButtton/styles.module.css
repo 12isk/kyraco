@@ -1,0 +1,55 @@
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    bottom: 2rem;
+    right: 2rem;
+    border-radius: 24px;
+    overflow: clip;
+    border: 1px solid transparent; /* Add initial transparent border */
+}
+
+
+
+
+
+.circle {
+    width: 6px;
+    height: 6px;
+    background-color: #01130C;
+    opacity: 0;
+    border-radius: 50%;
+    position: absolute;
+    /* Remove left: 22px and center it instead */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.shopNowButton {
+    background-color: var(--snow);
+    width: 10vw;
+    height: 2.5rem;
+    border: none; /* Remove border from button */
+    border-radius: 24px;
+    color: var(--color-background);
+    font-family: 'Satoshi-Medium', sans-serif;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.shopNowText {
+    z-index: 1;
+    padding: 0; /* Remove padding since button handles centering */
+}
+
+/* Keep your responsive styles */
+@media (min-width: 1024px) {
+    .shopNowButton {
+        width: 10vw;
+    }
+}
