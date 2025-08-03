@@ -1,12 +1,22 @@
-import React from 'react'
-import styles from './styles.module.css'
-import GenericBtn from '../buttons/genericBtn'
 import Link from 'next/link'
+import React from 'react'
+
+import GenericBtn from '../buttons/genericBtn'
+import styles from './styles.module.css'
 
 export default function Campaign() {
   return (
+    <>
+    <Head>
+        <link 
+          rel="preload" 
+          as="video" 
+          href="/media/videos/campaign2.webm"
+          type="video/webm"
+        />
+      </Head>
     <div className={styles.campaignContainer}>
-      <video className={styles.campaignVid} loop autoPlay muted src="media/videos/campaign1.webm"/>
+      <video className={styles.campaignVid} preload="auto" loop autoPlay muted src="media/videos/campaign2.webm"/>
         <div className={styles.campaignOverlayText}>
         <h2 className={styles.campaignTitle}>Mobilité Solidaire </h2>
         <p className={styles.campaignDesc}>
@@ -27,5 +37,6 @@ export default function Campaign() {
       
       
     </div>
+    </>
   )
 }
