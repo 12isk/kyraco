@@ -7,14 +7,14 @@ import styles from './styles.module.css'
 export default function Campaign() {
   return (
     <>
-    <Head>
+    <head>
         <link 
           rel="preload" 
           as="video" 
           href="/media/videos/campaign2.webm"
           type="video/webm"
         />
-      </Head>
+      </head>
     <div className={styles.campaignContainer}>
       <video className={styles.campaignVid} preload="auto" loop autoPlay muted src="media/videos/campaign2.webm"/>
         <div className={styles.campaignOverlayText}>
