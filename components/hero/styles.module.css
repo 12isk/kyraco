@@ -36,9 +36,10 @@
 
 .heroTitle {
     font-family: 'Satoshi-Medium', sans-serif;
+    /* font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, sans-serif; */
     font-size: 5rem;
     /* font-weight: bold; */
-    letter-spacing: -0.05em;
+    letter-spacing: -5%;
     /* margin-bottom: 20px; */
     text-wrap: nowrap;
     /* filter: brightness(1.5); */

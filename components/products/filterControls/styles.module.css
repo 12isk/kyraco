@@ -1,0 +1,129 @@
+.filterControls {
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 2rem;
+  margin-bottom: 1rem;
+}
+
+.topRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.rightControls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.productCount {
+  font-size: 0.875rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.sortSelect {
+  background: transparent;
+  border: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: #1a1a1a;
+  cursor: pointer;
+  border-radius: 24px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.sortSelect:hover,
+.sortSelect:focus {
+  border-color: #999;
+}
+
+.categoryFilter {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.categoryBtn {
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 24px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  
+}
+
+.categoryBtn:hover {
+  border-color: #999;
+  color: #1a1a1a;
+}
+
+.categoryBtn.active {
+  background: #1a1a1a;
+  color: white;
+  border-color: #1a1a1a;
+}
+
+@media (max-width: 768px) {
+  .topRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .title {
+    font-size: 1.75rem;
+  }
+  
+  .rightControls {
+    align-self: flex-end;
+    gap: 1rem;
+  }
+  
+  .categoryFilter {
+    gap: 0.375rem;
+  }
+  
+  .categoryBtn {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .filterControls {
+    padding-bottom: 1.5rem;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+  }
+  
+  .categoryBtn {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
+  
+  .sortSelect {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+  }
+}

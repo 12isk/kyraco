@@ -1,0 +1,35 @@
+/* ProductGridContainer.module.css */
+.container {
+  max-width: 1400px;
+  margin: 3rem 0 auto;
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  
+}
+
+@media(min-height: 1000px) {
+    .container {
+        margin: 5rem 0 auto
+    }
+}
+
+.loading,
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  font-size: 1.125rem;
+  color: #666;
+}
+
+.error {
+  color: #dc2626;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+}

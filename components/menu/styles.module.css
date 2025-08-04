@@ -14,9 +14,9 @@
   background-color: var(--snow);
   opacity: .98;
   backdrop-filter: blur(10px);
-  border-radius: 1rem;
+  
   align-items: center;
-  border-radius: 30px; /* Pill shape */
+  border-radius: 36px; /* Pill shape */
   padding: 0 2rem; /* Padding for content */
   box-shadow: 0 4px 20px rgba(0,0,0,0.1); /* Subtle shadow */
 
