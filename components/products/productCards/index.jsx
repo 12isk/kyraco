@@ -27,7 +27,7 @@ const ProductCard = React.memo(({
   }, [product.id, onHover]);
 
   return (
-    <Link href={`/products/${product.id}`} className={styles.cardLink}>
+    <Link href={`/products/${product.slug}`} className={styles.cardLink}>
       <div 
         className={`${styles.productCard} ${isBlurred ? styles.blurred : ''} ${isHovered ? styles.hovered : ''}`}
         onMouseEnter={handleMouseEnter}

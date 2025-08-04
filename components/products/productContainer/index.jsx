@@ -8,21 +8,31 @@ import FilterControls from '../filterControls';
 import styles from './styles.module.css';
 
 // Custom hook for hover state management
-const useProductHover = () => {
+const useProductHover = (enterDelay = 300, exitDelay = 50) => {
   const [hoveredProduct, setHoveredProduct] = useState(null);
-  const timeoutRef = useRef();
+  const enterTimeout = useRef();
+  const exitTimeout  = useRef();
 
-  const handleProductHover = useCallback((productId, isHovered) => {
-    clearTimeout(timeoutRef.current);
-    
-    if (isHovered) {
-      setHoveredProduct(productId);
-    } else {
-      timeoutRef.current = setTimeout(() => {
-        setHoveredProduct(null);
-      }, 50);
-    }
-  }, []);
+  const handleProductHover = useCallback(
+    (productId, isHovered) => {
+      // clear both pending timeouts
+      clearTimeout(enterTimeout.current);
+      clearTimeout(exitTimeout.current);
+
+      if (isHovered) {
+        // schedule entry after enterDelay
+        enterTimeout.current = setTimeout(() => {
+          setHoveredProduct(productId);
+        }, enterDelay);
+      } else {
+        // schedule exit after exitDelay
+        exitTimeout.current = setTimeout(() => {
+          setHoveredProduct(null);
+        }, exitDelay);
+      }
+    },
+    [enterDelay, exitDelay]
+  );
 
   return [hoveredProduct, handleProductHover];
 };
@@ -47,6 +57,7 @@ export default function ProductGridContainer() {
         .from('products')
         .select('*')
         .eq('active', true);
+      console.log('Fetched products:', data);
 
       if (error) throw error;
       setProducts(data);
