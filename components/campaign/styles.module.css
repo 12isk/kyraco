@@ -12,9 +12,13 @@
 
 .campaignVid {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fill;
+    transform: scale(1.1); /* Adjust the scale value as needed */
+    transform-origin: center;
 }
 
 .campaignOverlay{
@@ -81,8 +85,8 @@
 
 @media(min-height: 1000px) {
     .campaignBtnContainer {
-        bottom: 20%;
-        left:50%;
-        transform: translateX(-50%);
+        bottom: 25%;
+        left:5%;
+        /* transform: translateX(-0%); */
     }
 }
