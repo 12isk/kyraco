@@ -53,7 +53,7 @@
 
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
-import { createWaveSession } from '@/lib/wave'
+import { createCheckoutSession } from '@/lib/waveApi'
 
 export async function POST(request) {
   const { customer, amount, phoneNumber } = await request.json()
@@ -89,7 +89,7 @@ export async function POST(request) {
   const successUrl = `${host}/checkout/success?order_id=${orderId}`
   const cancelUrl  = `${host}/checkout/cancel?order_id=${orderId}`
 
-  const { launchUrl, error: waveError } = await createWaveSession({
+  const { launchUrl, error: waveError } = await createCheckoutSession({
     amount,
     phoneNumber,
     metadata:       { orderId },
