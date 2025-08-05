@@ -50,35 +50,84 @@ export default function CheckoutPage() {
     if (f.replace(/\s/g, "").length <= 10) setWavePhone(f)
   }
 
-  async function handlePay() {
+  // async function handlePay() {
 
+  //   const customer = {
+  //     firstName: firstName,
+  //     lastName: lastName,
+  //     phone: phone,
+  //     address: address,
+  //     city: city
+  //   };
+
+  //   try {
+  //     const orderId = crypto.randomUUID();
+  //     const res = await fetch("/api/checkout", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         customer: customer,
+  //         orderId: orderId,
+  //         amount: total,
+  //         phoneNumber: waveCountryCode + wavePhone.replace(/\s/g, ""),
+  //       }),
+  //     })
+  //     const session = await res.json()
+  //     localStorage.setItem("session", JSON.parse("session"));
+  //     if (!res.ok) throw new Error(session.error)
+  //     router.push(session.wave_launch_url)
+  //   } catch (err) {
+  //     console.error(err)
+  //     alert("Erreur de paiement : " + err.message)
+  //   }
+  // }
+  // app/checkout/page.tsx  (or .jsx)
+
+
+  async function handlePay() {
+    // build a complete customer object, including email & items
     const customer = {
-      firstName: firstName,
-      lastName: lastName,
-      phone: phone,
-      address: address,
-      city: city
-    };
+      firstName,
+      lastName,
+      email,
+      phone,
+      address,
+      suite,
+      city,
+      items: cart.map(i => ({
+        id:       i.id,
+        name:     i.name,
+        variant:  i.variant || null,
+        price:    i.price,
+        quantity: i.quantity
+      }))
+    }
 
     try {
-      const orderId = crypto.randomUUID();
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          customer: customer,
-          orderId: orderId,
-          amount: total,
-          phoneNumber: waveCountryCode + wavePhone.replace(/\s/g, ""),
+      const orderId = crypto.randomUUID()
+      const res = await fetch('/api/checkout', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({
+          orderId,
+          amount:      total,
+          phoneNumber: waveCountryCode + wavePhone.replace(/\s/g, ''),
+          customer
         }),
       })
+
       const session = await res.json()
-      localStorage.setItem("session", JSON.parse("session"));
       if (!res.ok) throw new Error(session.error)
+
+      // store it if you need on the success page
+      localStorage.setItem('checkout_session', JSON.stringify(session))
+      localStorage.setItem('checkout_orderId', orderId)
+
+      // redirect into Wave
       router.push(session.wave_launch_url)
     } catch (err) {
       console.error(err)
-      alert("Erreur de paiement : " + err.message)
+      alert('Erreur de paiement : ' + err.message)
     }
   }
 
