@@ -134,8 +134,8 @@ export default function Menu() {
               )}
             </div>
           </>
-        )}
-
+        )} 
+{/* todo: make it so opening the menu closes the cart  */}
         {/* ===== Right Controls ===== */}
         <div className={styles.rightContainer}>
           {/* Desktop non-product: cart icon */}
