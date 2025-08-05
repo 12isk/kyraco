@@ -51,16 +51,29 @@ export default function CheckoutPage() {
   }
 
   async function handlePay() {
+
+    const customer = {
+      firstName: firstName,
+      lastName: lastName,
+      phone: phone,
+      address: address,
+      city: city
+    };
+
     try {
+      const orderId = crypto.randomUUID();
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          customer: customer,
+          orderId: orderId,
           amount: total,
           phoneNumber: waveCountryCode + wavePhone.replace(/\s/g, ""),
         }),
       })
       const session = await res.json()
+      localStorage.setItem("session", JSON.parse("session"));
       if (!res.ok) throw new Error(session.error)
       router.push(session.wave_launch_url)
     } catch (err) {
