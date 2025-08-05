@@ -1,3 +1,4 @@
+import { supabase } from "@/lib/supabase";
 export async function GET(request, { params }) {
   const { orderId } = params;
   console.log("🛎️ GET /api/orders/", orderId);
