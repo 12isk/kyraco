@@ -7,24 +7,30 @@ import { useCart } from "@/app/CartContext"
 import styles from "./styles.module.css"
 
 export default function CheckoutErrorPage() {
-  const router = useRouter()
+  const router       = useRouter()
   const searchParams = useSearchParams()
   const { clearCart } = useCart()
 
-  const [loading, setLoading] = useState(true)
+  const [loading,    setLoading]    = useState(true)
   const [fetchError, setFetchError] = useState(null)
-  const [order, setOrder] = useState(null)
+  const [order,      setOrder]      = useState(null)
   const [errorDetails, setErrorDetails] = useState({
     type:    "payment_failed",
     message: "Le paiement n'a pas pu être traité",
     code:    "PAYMENT_ERROR",
   })
 
+  const formatCurrency = (amt) =>
+    new Intl.NumberFormat("fr-FR", {
+      style: "currency",
+      currency: "XOF",
+      minimumFractionDigits: 0,
+    }).format(amt)
+
   useEffect(() => {
-    // 1️⃣ Parse URL params
-    const type    = searchParams.get("error")   || "payment_failed"
-    const message = searchParams.get("message") || "Une erreur est survenue"
-    const code    = searchParams.get("code")    || "UNKNOWN_ERROR"
+    const type    = searchParams.get("error")    || "payment_failed"
+    const message = searchParams.get("message")  || "Une erreur est survenue"
+    const code    = searchParams.get("code")     || "UNKNOWN_ERROR"
     const orderId = searchParams.get("order_id")
 
     setErrorDetails({ type, message, code })
@@ -35,112 +41,29 @@ export default function CheckoutErrorPage() {
       return
     }
 
-    // 2️⃣ Fetch the saved order from your API
-    fetch(`/api/orders/${orderId}`)
-      .then((res) => {
+    const fetchOrder = async () => {
+      try {
+        const res = await fetch(`/api/orders/${orderId}`)
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        return res.json()
-      })
-      .then((json) => {
-        setOrder(json.order)
+        const orderData = await res.json()
+        setOrder(orderData)     // ← raw row
         clearCart()
-      })
-      .catch((err) => {
-        console.error("Erreur fetch order:", err)
+      } catch (err) {
+        console.error("Erreur récupération commande :", err)
         setFetchError("Impossible de récupérer votre commande.")
-      })
-      .finally(() => setLoading(false))
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchOrder()
   }, [searchParams, clearCart])
-
-  const formatCurrency = (amt) =>
-    new Intl.NumberFormat("fr-FR", {
-      style: "currency",
-      currency: "XOF",
-      minimumFractionDigits: 0,
-    }).format(amt)
-
-  function getErrorIcon() {
-    switch (errorDetails.type) {
-      case "payment_failed":
-        return (
-          <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="10" fill="#EF4444" />
-            <path d="m15 9-6 6m0-6 6 6"
-                  stroke="white" strokeWidth="2"
-                  strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        )
-      case "network_error":
-        return (
-          <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="10" fill="#F59E0B" />
-            <path d="M12 8v4m0 4h.01"
-                  stroke="white" strokeWidth="2"
-                  strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        )
-      default:
-        return (
-          <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="10" fill="#6B7280" />
-            <path d="M12 8v4m0 4h.01"
-                  stroke="white" strokeWidth="2"
-                  strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        )
-    }
-  }
-
-  function getErrorTitle() {
-    switch (errorDetails.type) {
-      case "payment_failed":   return "Paiement échoué"
-      case "network_error":    return "Problème de connexion"
-      case "session_expired":  return "Session expirée"
-      default:                 return "Erreur de traitement"
-    }
-  }
-
-  function getErrorDescription() {
-    switch (errorDetails.type) {
-      case "payment_failed":
-        return "Votre paiement n'a pas pu être traité. Vérifiez vos infos et réessayez."
-      case "network_error":
-        return "Erreur de connexion. Vérifiez votre réseau et réessayez."
-      case "session_expired":
-        return "Votre session a expiré. Veuillez recommencer la commande."
-      default:
-        return "Une erreur inattendue est survenue lors du traitement de votre commande."
-    }
-  }
-
-  function getSolutions() {
-    switch (errorDetails.type) {
-      case "payment_failed":
-        return [
-          "Vérifiez que votre numéro Wave est correct",
-          "Assurez-vous d'avoir suffisamment de fonds",
-          "Contactez votre opérateur si le problème persiste",
-        ]
-      case "network_error":
-        return [
-          "Vérifiez votre connexion internet",
-          "Actualisez la page et réessayez",
-          "Essayez un autre navigateur",
-        ]
-      default:
-        return [
-          "Actualisez la page et réessayez",
-          "Vérifiez votre connexion internet",
-          "Contactez le support si nécessaire",
-        ]
-    }
-  }
 
   if (loading) {
     return (
       <div className={styles.container}>
         <div className={styles.loadingSpinner}>
-          <div className={styles.spinner}></div>
+          <div className={styles.spinner} />
           <p>Chargement…</p>
         </div>
       </div>
@@ -161,6 +84,83 @@ export default function CheckoutErrorPage() {
     )
   }
 
+  const { type, message, code } = errorDetails
+
+  function getErrorIcon() {
+    if (type === "payment_failed") {
+      return (
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" fill="#EF4444" />
+          <path d="m15 9-6 6m0-6 6 6"
+                stroke="white" strokeWidth="2"
+                strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      )
+    }
+    if (type === "network_error") {
+      return (
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" fill="#F59E0B" />
+          <path d="M12 8v4m0 4h.01"
+                stroke="white" strokeWidth="2"
+                strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      )
+    }
+    return (
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10" fill="#6B7280" />
+        <path d="M12 8v4m0 4h.01"
+              stroke="white" strokeWidth="2"
+              strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    )
+  }
+
+  function getErrorTitle() {
+    switch (type) {
+      case "payment_failed":   return "Paiement échoué"
+      case "network_error":    return "Problème de connexion"
+      case "session_expired":  return "Session expirée"
+      default:                 return "Erreur de traitement"
+    }
+  }
+
+  function getErrorDescription() {
+    switch (type) {
+      case "payment_failed":
+        return "Votre paiement n'a pas pu être traité. Vérifiez vos infos et réessayez."
+      case "network_error":
+        return "Erreur de connexion. Vérifiez votre réseau et réessayez."
+      case "session_expired":
+        return "Votre session a expiré. Veuillez recommencer la commande."
+      default:
+        return "Une erreur inattendue est survenue lors du traitement de votre commande."
+    }
+  }
+
+  function getSolutions() {
+    if (type === "payment_failed") {
+      return [
+        "Vérifiez que votre numéro Wave est correct",
+        "Assurez-vous d'avoir suffisamment de fonds",
+        "Contactez votre opérateur si le problème persiste",
+      ]
+    }
+    if (type === "network_error") {
+      return [
+        "Vérifiez votre connexion internet",
+        "Actualisez la page et réessayez",
+        "Essayez un autre navigateur",
+      ]
+    }
+    return [
+      "Actualisez la page et réessayez",
+      "Vérifiez votre connexion internet",
+      "Contactez le support si nécessaire",
+    ]
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.errorContent}>
@@ -169,7 +169,7 @@ export default function CheckoutErrorPage() {
           <div className={styles.errorIcon}>{getErrorIcon()}</div>
         </div>
 
-        {/* Error Title & Description */}
+        {/* Title & Description */}
         <div className={styles.messageSection}>
           <h1 className={styles.title}>{getErrorTitle()}</h1>
           <p className={styles.subtitle}>{getErrorDescription()}</p>
@@ -179,11 +179,11 @@ export default function CheckoutErrorPage() {
         <div className={styles.errorDetails}>
           <div className={styles.infoRow}>
             <span className={styles.label}>Code d'erreur</span>
-            <span className={styles.errorCode}>{errorDetails.code}</span>
+            <span className={styles.errorCode}>{code}</span>
           </div>
           <div className={styles.infoRow}>
             <span className={styles.label}>Message</span>
-            <span className={styles.value}>{errorDetails.message}</span>
+            <span className={styles.value}>{message}</span>
           </div>
         </div>
 
