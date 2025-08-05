@@ -90,6 +90,18 @@ export default function Menu() {
     setCartOpen(false); // Close cart overlay
   }
 
+  // Handle opening the mobile menu
+  const handleOpenMenu = () => {
+    setMobileMenuOpen(true);
+    setCartOpen(false); // Close cart if open
+  };
+
+  // Handle opening the cart overlay
+  const handleCartOpen = () => {
+    setCartOpen(true);
+    setMobileMenuOpen(false); // Close mobile menu if open
+  };
+
   return (
     <>
       {/* ===== Main Menu Bar ===== */}
@@ -135,12 +147,11 @@ export default function Menu() {
             </div>
           </>
         )} 
-{/* todo: make it so opening the menu closes the cart  */}
         {/* ===== Right Controls ===== */}
         <div className={styles.rightContainer}>
           {/* Desktop non-product: cart icon */}
           {!isProductPage && showDesktopMenu && (
-            <button className={styles.cartLink} onClick={()=>setCartOpen(true)}>
+            <button className={styles.cartLink} onClick={handleCartOpen}>
               <div className={styles.cartIconWrapper}>
                 <img src="/icons/cart.svg" alt="Cart" className={styles.cartIcon}/>
                 {cartCount>0&&(
@@ -170,7 +181,7 @@ export default function Menu() {
               <button
                 aria-label="Open menu"
                 className={styles.hamburgerButton}
-                onClick={()=>setMobileMenuOpen(true)}
+                onClick={handleOpenMenu}
               >
                 <HamburgerIcon className="size-6" />
               </button>
