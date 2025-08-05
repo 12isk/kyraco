@@ -89,7 +89,7 @@ export default function Menu() {
     router.push('/checkout');
     setCartOpen(false); // Close cart overlay
   }
-  
+
   return (
     <>
       {/* ===== Main Menu Bar ===== */}
@@ -127,7 +127,7 @@ export default function Menu() {
                   </button>
                   <div className={styles.searchWrapper}>
                     <input className={styles.searchInput} placeholder="Search" aria-label="Search products"/>
-                    <button className={styles.searchButton} aria-label="Search">➔</button>
+                    {/* <button className={styles.searchButton} aria-label="Search">➔</button> */}
                   </div>
                   <button className={styles.moduleButton}>Filter</button>
                 </div>
@@ -185,7 +185,7 @@ export default function Menu() {
           <div className={styles.overlayHeader}>
             <div className={styles.searchWrapperMobile}>
               <input className={styles.searchInputMobile} placeholder="Search" aria-label="Search"/>
-              <button className={styles.searchButtonMobile} aria-label="Search">➔</button>
+              {/* <button className={styles.searchButtonMobile} aria-label="Search">➔</button> */}
             </div>
             <button className={styles.closeToggle} onClick={()=>setMobileMenuOpen(false)} aria-label="Close menu">×</button>
           </div>

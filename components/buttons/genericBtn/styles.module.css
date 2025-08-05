@@ -5,8 +5,11 @@
   justify-content: center;
   width: 200px; /* or your preferred width */
   height: 50px;
-  background-color: rgba(255, 255, 255, 0.40);
-  border: 1px solid white;
+  /* background-color: rgba(255, 255, 255, 0.40); */
+  border: 1px solid rgba(230, 230, 230, 0.813);;
+  backdrop-filter: blur(4px); 
+   background:rgba(234, 233, 233, 0.2);
+
   border-radius: 24px;
   cursor: pointer;
   transition: all 0.3s ease;

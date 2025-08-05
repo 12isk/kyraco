@@ -116,7 +116,7 @@
   scroll-snap-align: center;
   flex: 0 0 100%;
   width: 100%;
-  height: 80vh;
+  /* height: 60vh; */
   object-fit: contain;
 }
 
@@ -126,23 +126,34 @@
   flex-direction: column;
   gap: 1rem;
 }
-.returnBtnWrapper {
-  position: fixed;
-  top: calc(0.8rem + 5vh); /* accounts for menu position + height */
-  left: 1rem;
-  z-index: 1200;
+
+
+/* Flat Line Slider Indicators */
+.sliderIndicators {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 1rem;
+  padding: 0 1rem;
 }
 
-@media (min-width: 768px) {
-  .returnBtnWrapper {
-    top: calc(0.8rem + 4vh);
-  }
+.lineIndicator {
+  width: 36px;
+  height: 2px;
+  border: none;
+  background: #e5e7eb;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 1px;
 }
 
-@media (min-width: 1250px) {
-  .returnBtnWrapper {
-    top: calc(0.8rem + 3vh);
-  }
+.lineIndicator:hover {
+  background: #9ca3af;
+}
+
+.activeLineIndicator {
+  background: #111827;
+  width: 42px;
 }
 
 
@@ -162,7 +173,7 @@
     top: 1rem;
   }
 
-  .info {
+  .info { 
     position: relative;
     top: 0;
   }
@@ -198,6 +209,7 @@
   .info {
     position: relative;
     top: 0;
+    gap: 0rem;
   }
 }
 
@@ -219,8 +231,34 @@
     padding: 1rem 0;
   }
 
+  .actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .mainImage {
     height: auto;
+  }
+  .info {
+    /* tighten up spacing between all children */
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;      /* <-- add this */
+    padding: 1rem 0;  /* you already have this */
+  }
+
+  /* also tweak specific bottom‐margins if needed */
+  .info .name {
+    margin-bottom: 0.25rem;
+  }
+  .info .subcategory {
+    margin-bottom: 0.5rem;
+  }
+  .info .price {
+    margin-bottom: 0.75rem;
+  }
+  .info .description {
+    margin-bottom: 1rem;
   }
 }
 

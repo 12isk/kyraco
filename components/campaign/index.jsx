@@ -9,7 +9,12 @@ export default function Campaign() {
     <>
     
     <div className={styles.campaignContainer}>
-      <video className={styles.campaignVid} preload="auto" loop autoPlay muted src="media/videos/campaign2.webm"/>
+      <video className={styles.campaignVid} 
+        preload="auto" loop 
+        autoPlay muted 
+        playsInline                
+        webkit-playsinline="true" 
+        src="media/videos/campaign2.webm"/>
         <div className={styles.campaignOverlayText}>
         <h2 className={styles.campaignTitle}>Mobilité Solidaire </h2>
         <p className={styles.campaignDesc}>
