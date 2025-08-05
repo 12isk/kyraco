@@ -142,7 +142,7 @@ export default function Menu() {
                     {/* <button className={styles.searchButton} aria-label="Search">➔</button> */}
                   </div>
                   <button className={styles.moduleButton}>Filter</button>
-                </div>
+                </div> //todo: remove alert from adding in cart, make modal instead
               )}
             </div>
           </>

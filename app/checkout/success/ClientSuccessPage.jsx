@@ -23,30 +23,70 @@ export default function CheckoutSuccessPage() {
       minimumFractionDigits: 0,
     }).format(amt)
 
-  useEffect(() => {
-    if (!orderId) {
-      setError("Aucun identifiant de commande fourni.")
-      setLoading(false)
-      return
-    }
+  // useEffect(() => {
+  //   if (!orderId) {
+  //     setError("Aucun identifiant de commande fourni.")
+  //     setLoading(false)
+  //     return
+  //   }
 
-    const fetchOrder = async () => {
-      try {
-        const res = await fetch(`/api/orders/${orderId}`)
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        const orderData = await res.json()
-        setOrder(orderData)            // <-- raw row
-        clearCart()
-      } catch (err) {
-        console.error("Erreur récupération commande :", err)
-        setError("Impossible de récupérer votre commande.")
-      } finally {
-        setLoading(false)
+  //   const fetchOrder = async () => {
+  //     try {
+  //       const res = await fetch(`/api/orders/${orderId}`)
+  //       if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  //       const orderData = await res.json()
+  //       setOrder(orderData)            // <-- raw row
+  //       clearCart()
+  //     } catch (err) {
+  //       console.error("Erreur récupération commande :", err)
+  //       setError("Impossible de récupérer votre commande.")
+  //     } finally {
+  //       setLoading(false)
+  //     }
+  //   }
+
+  //   fetchOrder()
+  // }, [orderId, clearCart])
+useEffect(() => {
+  if (!orderId) {
+    console.error("No orderId provided");
+    setError("Aucun identifiant de commande fourni.");
+    setLoading(false);
+    return;
+  }
+
+  async function fetchOrder() {
+    const url = `/api/orders/${orderId}`;
+    console.log("⏳ Fetching order from:", url);
+
+    try {
+      const res = await fetch(url);
+      console.log("📥 Raw response:", res);
+
+      const text = await res.text();
+      console.log("📑 Response text:", text);
+
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
       }
-    }
 
-    fetchOrder()
-  }, [orderId, clearCart])
+      // If your API returns `{ order: {...} }` vs. the row itself, log that too:
+      const json = JSON.parse(text);
+      console.log("🗃️ Parsed JSON:", json);
+
+      // either
+      setOrder(json.order || json);
+      clearCart();
+    } catch (err) {
+      console.error("❌ Erreur récupération commande :", err);
+      setError("Impossible de récupérer votre commande.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  fetchOrder();
+}, [orderId, clearCart]);
 
   if (loading) {
     return (
