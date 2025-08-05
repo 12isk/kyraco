@@ -136,10 +136,21 @@ export default function CheckoutPage() {
     try {
       const generatedOrderId = crypto.randomUUID()
       const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ customer, amount: total, phoneNumber: waveCountryCode + wavePhone.replace(/\s/g, ''), orderId: generatedOrderId })
-      })
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    customer,
+    amount: total,
+    phoneNumber: waveCountryCode + wavePhone.replace(/\s/g, ''),
+    items: cart.map(i => ({
+      id:       i.id,
+      name:     i.name,
+      variant:  i.variant || null,
+      price:    i.price,
+      quantity: i.quantity
+    }))
+  })
+})
       const { wave_launch_url, orderId: responseOrderId, error } = await res.json()
       if (!res.ok) throw new Error(error)
 
