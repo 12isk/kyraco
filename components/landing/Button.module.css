@@ -1,0 +1,78 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 36px;
+  font-family: inherit;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  outline: none;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button:focus {
+  outline: 2px solid #22c55e;
+  outline-offset: 2px;
+}
+
+/* Variants */
+.primary {
+  background-color: rgba(189, 189, 189, 0.4);
+  border: 1px solid white;
+  backdrop-filter: blur(4px);
+  color: white;
+  mix-blend-mode: exclusion;
+}
+
+.primary:hover:not(:disabled) {
+  background-color: rgba(189, 189, 189, 0.6);
+  transform: scale(1.05);
+}
+
+.secondary {
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(230, 230, 230, 0.813);
+  color: #374151;
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+}
+
+/* Sizes */
+.sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  min-height: 36px;
+}
+
+.md {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  min-height: 44px;
+}
+
+.lg {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  min-height: 48px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+  
+  .primary:hover,
+  .secondary:hover {
+    transform: none;
+  }
+}

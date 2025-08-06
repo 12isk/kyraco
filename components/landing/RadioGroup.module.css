@@ -1,0 +1,22 @@
+.radioGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.radioInput {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.radioInput:focus + label {
+  outline: 2px solid #22c55e;
+  outline-offset: 2px;
+}
+
+.radioInput:checked + label {
+  background-color: #22c55e;
+  color: white;
+  border-color: #22c55e;
+}

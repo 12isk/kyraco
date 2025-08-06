@@ -58,6 +58,15 @@ export default function Menu() {
   const isProductPage = /^\/products\/[^\/]+$/.test(pathname);
   const isMobile = useIsMobile(900);
 
+  // detect landing or checkout
+  const isLandingPage = /^\/landing(\/.*)?$/.test(pathname);
+  const isCheckoutPage = pathname === "/checkout";
+
+  // if we’re on landing *or* checkout, don’t render the menu
+  if (isLandingPage || isCheckoutPage) {
+    return null;
+  }
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
 

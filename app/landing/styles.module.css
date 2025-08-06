@@ -1,0 +1,763 @@
+/* Import Satoshi Font */
+@import url('../../css/satoshi.css');
+@import url('../../css/instrument.css');
+
+.container {
+  min-height: 100vh;
+  
+  position: relative;
+  overflow-x: hidden;
+  font-family: 'Satoshi', sans-serif;
+}
+
+/* Video Background */
+.videoBackground {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  object-fit: cover;
+  /* opacity: 0.3; */
+  z-index: -2;
+}
+
+.videoBackgroundOverlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  /* background: linear-gradient(
+    135deg,
+    rgba(240, 253, 244, 0.8) 0%,
+    rgba(220, 252, 231, 0.8) 100%
+  ); */
+  /* backdrop-filter: blur(2px); */
+  z-index: -1;
+}
+
+/* Typography */
+.fontSatoshi {
+  font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.fontSatoshiMedium {
+  font-family: 'Satoshi-Medium', -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.03rem;
+}
+
+/* Header Styles */
+.header {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 50;
+}
+
+.navContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo {
+  width: 2rem;
+  height: 2rem;
+  background-color: #22c55e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoText {
+  color: white;
+  font-weight: bold;
+  font-size: 0.875rem;
+}
+
+.navTitle {
+  display: none;
+  color: white;
+  font-family: 'Satoshi-Medium', sans-serif;
+  font-size: 1.125rem;
+  mix-blend-mode: exclusion;
+  margin: 0;
+}
+
+.menuButton {
+  padding: 0.5rem;
+}
+
+/* Mobile Menu */
+.mobileOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobileMenuContent {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mobileMenuTitle {
+  font-size: 1.5rem;
+  font-family: 'Satoshi-Medium', sans-serif;
+  color: white;
+  mix-blend-mode: exclusion;
+  margin: 0;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mobileNavLink {
+  display: block;
+  color: white;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.mobileNavLink:hover {
+  color: #86efac;
+}
+
+/* Hero Section */
+/* Hero Section - Enhanced Visibility */
+.heroSection {
+  padding-top: 6rem;
+  padding-bottom: 3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: relative;
+  z-index: 10; /* Ensure hero is above background elements */
+}
+
+.heroContainer {
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.videoContainer {
+  position: relative;
+  border-radius: 36px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  min-height: 60vh;             /* Ensure minimum height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 16/9;
+  opacity: 0.8;
+}
+
+.heroFallbackImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 20%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 15;                  /* Above videoContainer */
+  background: rgba(234, 233, 233, 0.2) /* Dark tint for contrast */
+}
+
+.heroContent {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+  z-index: 20;                  /* Above overlay */
+  max-width: 800px;
+  padding: 2rem;
+  letter-spacing: -5%;
+  justify-content: center;
+  align-items: center;
+}
+
+/* —— Title & CTA styles from your second CSS —— */
+.heroTitle {
+  font-size: 3rem;
+  font-family: 'Satoshi-Medium', sans-serif;
+  color: rgba(230, 230, 230, 0.973);
+  mix-blend-mode: difference;
+  margin: 0;
+}
+
+.emph{
+    font-family: "Instrument";
+    font-style: italic;
+    transform: scale(1.1);
+
+}
+
+.heroCta {
+  font-size: 1.125rem;
+  padding: 0.75rem 2rem;
+  width:50%;
+}
+
+/* Responsive adjustments (merged) */
+@media (min-width: 768px) {
+  .heroTitle {
+    font-size: 4rem;          /* from second's media query */
+  }
+  .heroContent {
+    padding: 3rem;            /* from first's media query */
+  }
+}
+
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: 2rem;
+    padding: 1rem 1.5rem;     /* from first's mobile rules */
+  }
+  .heroContent {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+  .heroCta {
+    font-size: 1.125rem;
+    padding: 0.75rem 2rem;    /* keep same as base */
+  }
+}
+
+
+/* Prizes Section */
+.prizesSection {
+  padding: 3rem 1rem;
+  position: relative;
+}
+
+.prizesContainer {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: 2.2rem;
+  font-family: 'Satoshi-Medium', sans-serif;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: rgba(230, 230, 230, 0.973);
+  mix-blend-mode: exclusion;
+  letter-spacing: -5%;
+  margin-top: 0;
+}
+
+.prizesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.prizeCard {
+  background: rgba(169, 169, 169, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1.5rem;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.prizeCard:hover {
+  transform: scale(1.05);
+  background: rgba(169, 169, 169, 0.2);
+}
+
+.prizeImageContainer {
+  aspect-ratio: 1;
+  border-radius: 24px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.prizeImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.prizeTitle {
+  font-family: 'Satoshi-Medium', sans-serif;
+  font-size: 1.125rem;
+  color: rgba(230, 230, 230, 0.973);
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -2%;
+}
+
+.prizeDescription {
+  color: #9f9f9f;
+  font-size: 0.875rem;
+  margin: 0;
+  
+}
+
+/* Form Section */
+.formSection {
+  padding: 3rem 1rem;
+  position: relative;
+}
+
+.formContainer {
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.formTitle {
+  font-size: 1.5rem;
+  font-family: 'Satoshi-Medium', sans-serif;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: rgba(230, 230, 230, 0.973);
+  margin-top: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.formLabel {
+  color: rgba(230, 230, 230, 0.973);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.radioGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.radioItem {
+  display: flex;
+  align-items: center;
+}
+
+.radioInput {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.paymentSection {
+  padding-top: 1rem;
+}
+
+.paymentButton {
+  width: 100%;
+  font-size: 1.125rem;
+  padding: 0.75rem;
+}
+
+.securityBadge {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.securityIcon {
+  color: #22c55e;
+}
+
+.securityText {
+  font-size: 0.875rem;
+  color: #e1e2e2;
+  mix-blend-mode: exclusion;
+}
+
+.greenDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #22c55e;
+  border-radius: 50%;
+}
+
+/* Trust Section */
+.trustSection {
+  padding: 3rem 1rem;
+  position: relative;
+}
+
+.trustContainer {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.trustGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.trustItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.trustIcon {
+  color: #22c55e;
+}
+
+.trustText {
+  color: rgba(230, 230, 230, 0.973);
+  mix-blend-mode: exclusion;
+  font-size: 0.875rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.statCard {
+  text-align: center;
+}
+
+.statIconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.vehicleIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #22c55e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vehicleIconText {
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.statNumber {
+  font-size: 1.5rem;
+  font-family: 'Satoshi-Medium', sans-serif;
+  color: rgba(230, 230, 230, 0.973);
+  mix-blend-mode: exclusion;
+}
+
+.statLabel {
+  color: #777f8e;
+  font-size: 0.875rem;
+}
+
+/* Footer */
+.footer {
+  padding: 2rem 1rem;
+  border-top: 1px solid rgba(229, 231, 235, 0.3);
+  position: relative;
+}
+
+.footerContainer {
+  max-width: 64rem;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.footerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.contactInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.contactIcon {
+  color: #22c55e;
+}
+
+.contactText {
+  color: #6b7280;
+}
+
+.footerCopyright {
+  color: #9ca3af;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.socialMedia {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.socialIcon {
+  width: 2rem;
+  height: 2rem;
+  background-color: rgba(209, 213, 219, 0.5);
+  backdrop-filter: blur(5px);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Enhanced Glassmorphic Components */
+.glassmorphicNav {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glassmorphicOverlay {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 36px;
+}
+
+.glassmorphicCard {
+  background: rgba(169, 169, 169, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 36px;
+  /* border: 1px solid rgba(255, 255, 255, 0.2); */
+  padding: 1.5rem;
+}
+
+.glassmorphicFormContainer {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px);
+  border-radius: 36px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+  padding: 2rem;
+  /* border: 1px solid rgba(255, 255, 255, 0.18); */
+}
+
+.glassmorphicPill {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glassmorphicBadge {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 36px;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glassmorphicDropdown {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(15px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Button Styles */
+.pillButton {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 36px;
+  color: white;
+  mix-blend-mode: exclusion;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.pillButton:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+/* Input Styles */
+.pillInput {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.75rem 1rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.pillInput:focus {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+  outline: none;
+}
+
+.pillRadioButton {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 36px;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-block;
+  backdrop-filter: blur(10px);
+}
+
+.pillRadioButton:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .navTitle {
+    display: block;
+  }
+  
+  .heroTitle {
+    font-size: 3rem;
+  }
+  
+  .prizesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .trustGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .footerContent {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .prizesGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .glassmorphicFormContainer {
+    padding: 1.5rem;
+  }
+  
+  .prizeCard {
+    padding: 1rem;
+  }
+}
+
+/* Enhanced Mobile Touch Targets */
+@media (max-width: 480px) {
+  .pillButton {
+    min-height: 44px;
+    padding: 0.75rem 1.5rem;
+  }
+  
+  .pillInput {
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+  }
+  
+  .pillRadioButton {
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* Focus States for Accessibility */
+.pillButton:focus,
+.pillInput:focus,
+.pillRadioButton:focus {
+  outline: 2px solid #22c55e;
+  outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .glassmorphicNav,
+  .glassmorphicCard,
+  .glassmorphicFormContainer,
+  .glassmorphicPill,
+  .glassmorphicBadge {
+    border: 2px solid #000;
+    background: rgba(255, 255, 255, 0.9);
+  }
+  
+  .pillButton {
+    background: #22c55e;
+    border: 2px solid #000;
+    color: #000;
+    mix-blend-mode: normal;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .prizeCard,
+  .pillButton,
+  .pillRadioButton {
+    transition: none;
+  }
+  
+  .prizeCard:hover,
+  .pillButton:hover {
+    transform: none;
+  }
+}

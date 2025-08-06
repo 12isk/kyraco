@@ -14,7 +14,7 @@ export default function Campaign() {
         autoPlay muted 
         playsInline                
         webkit-playsinline="true" 
-        src="media/videos/campaign2.webm"/>
+        src="/media/videos/campaign2.webm"/>
         <div className={styles.campaignOverlayText}>
         <h2 className={styles.campaignTitle}>Mobilité Solidaire </h2>
         <p className={styles.campaignDesc}>
