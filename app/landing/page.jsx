@@ -33,6 +33,7 @@ export default function EcologieLanding() {
     profession: "",
     montant: "",
   })
+  const [loading, setLoading] = useState(false)   // ← add this
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -308,9 +309,11 @@ export default function EcologieLanding() {
                   type="submit"
                   className={styles.paymentButton}
                   size="lg"
+                  disabled={loading}
                 >
-                  Payer avec Wave
+                  {loading ? "Patientez…" : "Payer avec Wave"}
                 </Button>
+
                 
                 <div className={`${styles.glassmorphicBadge} ${styles.securityBadge}`}>
                   <Shield size={16} className={styles.securityIcon} />
