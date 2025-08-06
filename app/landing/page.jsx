@@ -33,15 +33,33 @@ export default function EcologieLanding() {
     profession: "",
     montant: "",
   })
-  const [loading, setLoading] = useState(false)   // ← add this
+  const [loading, setLoading] = useState(false)   
+
+  const formatPhoneNumber = v =>
+  v
+    .replace(/\D/g, "")
+    .replace(/(\d{2})(?=\d)/g, "$1 ")
+    .trim()
+
+const handleTelephoneChange = e => {
+  const formatted = formatPhoneNumber(e.target.value)
+  if (formatted.replace(/\s/g, "").length <= 8) {
+    setFormData(f => ({ ...f, telephone: formatted }))
+  }
+}
+
 
   const handleSubmit = async e => {
     e.preventDefault()
     setLoading(true)
+    const phoneForWave = "+225" + formData.telephone.replace(/\s/g, "")
     const res = await fetch('/api/donations', {
       method: 'POST',
       headers: { 'Content-Type':'application/json' },
-      body: JSON.stringify(formData)
+      body: JSON.stringify({
+        ...formData,
+        telephone: phoneForWave,
+      })
     })
     const json = await res.json()
     setLoading(false)
@@ -54,6 +72,8 @@ export default function EcologieLanding() {
       .getElementById("participation-form")
       ?.scrollIntoView({ behavior: "smooth" })
   }
+
+  
 
   return (
     <div className={styles.container}>
@@ -240,13 +260,13 @@ export default function EcologieLanding() {
                   id="telephone"
                   type="tel"
                   value={formData.telephone}
-                  onChange={(e) => setFormData({...formData, telephone: e.target.value})}
-                  placeholder="+225 XX XX XX XX XX"
+                  onChange={handleTelephoneChange}
+                  placeholder="XX XX XX XX XX"
                   required
                 />
               </div>
               <div className={styles.formGroup}>
-                <Label htmlFor="nom" required>
+                <Label htmlFor="email" required>
                   E-mail
                 </Label>
                 <Input
@@ -254,7 +274,7 @@ export default function EcologieLanding() {
                   type="text"
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  placeholder="Votre nom complet"
+                  placeholder="votre@email.com"
                   required
                 />
               </div>
@@ -285,7 +305,7 @@ export default function EcologieLanding() {
                   onValueChange={(value) => setFormData({...formData, montant: value})}
                   className={styles.radioGroup}
                 >
-                  {["1000", "2000", "5000"].map((amount) => (
+                  {["1","1000", "2000", "5000"].map((amount) => (
                     <div key={amount} className={styles.radioItem}>
                       <RadioGroupItem
                         value={amount}
@@ -381,7 +401,7 @@ export default function EcologieLanding() {
           <div className={styles.footerContent}>
             <div className={styles.contactInfo}>
               <Phone size={16} className={styles.contactIcon} />
-              <span className={styles.contactText}>Contact: +225 XX XX XX XX</span>
+              <span className={styles.contactText}>Contact: +225 07 07 98 23 80</span>
             </div>
           </div>
           
