@@ -32,7 +32,7 @@ export async function POST(req) {
 
     // 2) create Wave checkout session
     console.log('[donations/route] Creating Wave checkout session...');
-    const origin  = request.headers.get('origin') || process.env.NEXT_PUBLIC_APP_URL;
+    const origin  = req.headers.get('origin') || process.env.NEXT_PUBLIC_APP_URL;
 
     let waveSession
     try {
