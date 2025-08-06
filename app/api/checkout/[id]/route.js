@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { retrieveCheckoutSession } from "@/lib/waveApi";
+import { retrieveCheckoutBySessionId } from "@/lib/waveApi";
 
 export async function GET(request, { params }) {
   const { id } = params;
   try {
-    const session = await retrieveCheckoutSession(id);
+    const session = await retrieveCheckoutBySessionId(id);
     return NextResponse.json(session);
   } catch (err) {
     const status = err.message.includes("404") ? 404 : 502;

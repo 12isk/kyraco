@@ -1,28 +1,20 @@
-// app/landing/success/page.jsx
-'use client'
-import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+// app/checkout/success/page.jsx
+import React, { Suspense } from 'react'
 
-export default function ThankYou() {
-  const params = useSearchParams()
-  const sessionId = params.get('session_id')
-  const [status, setStatus] = useState('Vérification…')
+// this file is *implicitly* a server component,
+// so you don't put `"use client"` at the top
 
-  useEffect(() => {
-    if (!sessionId) return
-    fetch(`/api/donations/verify?session_id=${sessionId}`)
-      .then(r=>r.json())
-      .then(j=> {
-        setStatus(j.complete
-          ? 'Votre don est confirmé ! 🎉'
-          : 'En attente de confirmation…')
-      })
-  }, [sessionId])
-
+export default function Page() {
   return (
-    <div style={{ padding:'2rem', textAlign:'center' }}>
-      <h1>Merci !</h1>
-      <p>{status}</p>
-    </div>
+    <Suspense fallback={<div>Chargement de la page de succès…</div>}>
+      {/* 
+        Dynamically import your client-only component 
+        (you can also just import it normally; next will code-split it)
+      */}
+      <ClientSuccess />
+    </Suspense>
   )
 }
+
+// lazy-load the client component to keep this a pure server file
+const ClientSuccess = React.lazy(() => import('./ClientSuccess'))

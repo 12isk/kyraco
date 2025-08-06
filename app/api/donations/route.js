@@ -19,7 +19,7 @@ export async function POST(req) {
   // 2) create Wave checkout session
   let wave
   try {
-    wave = await createWaveSession({
+    wave = await createCheckoutSession({
       amount: montant,
       phone: telephone,
       metadata: { donationId: data.id }

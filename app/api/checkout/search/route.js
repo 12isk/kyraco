@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { searchCheckoutSessions } from "@/lib/waveApi";
+import { searchCheckout } from "@/lib/waveApi";
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -8,7 +8,7 @@ export async function GET(request) {
     return NextResponse.json({ error: "client_reference is required" }, { status: 400 });
   }
   try {
-    const results = await searchCheckoutSessions(ref);
+    const results = await searchCheckout(ref);
     return NextResponse.json(results);
   } catch (err) {
     return NextResponse.json({ error: err.message }, { status: 502 });
