@@ -42,7 +42,7 @@ export async function POST(req) {
         {
           clientRefence: data.id,               // note the helper’s typo: “clientRefence”
           successUrl: `${origin}/landing/success?session_id={CHECKOUT_SESSION_ID}`,
-          errorUrl:  `${origin.env.NEXT_PUBLIC_APP_URL}/landing/cancel`,
+          errorUrl:  `${origin}/landing/cancel`,
         }
       );
       console.log(
