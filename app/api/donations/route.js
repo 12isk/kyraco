@@ -31,7 +31,9 @@ export async function POST(req) {
     )
 
     // 2) create Wave checkout session
-    console.log('[donations/route] Creating Wave checkout session...')
+    console.log('[donations/route] Creating Wave checkout session...');
+    const origin  = request.headers.get('origin') || process.env.NEXT_PUBLIC_APP_URL;
+
     let waveSession
     try {
       waveSession = await createCheckoutSession(
@@ -39,8 +41,8 @@ export async function POST(req) {
         telephone,               // phone number string
         {
           clientRefence: data.id,               // note the helper’s typo: “clientRefence”
-          successUrl: `${process.env.NEXT_PUBLIC_APP_URL}/landing/success?session_id={CHECKOUT_SESSION_ID}`,
-          errorUrl:  `${process.env.NEXT_PUBLIC_APP_URL}/landing/cancel`,
+          successUrl: `${origin}/landing/success?session_id={CHECKOUT_SESSION_ID}`,
+          errorUrl:  `${origin.env.NEXT_PUBLIC_APP_URL}/landing/cancel`,
         }
       );
       console.log(
