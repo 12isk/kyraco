@@ -41,7 +41,7 @@ export async function POST(req) {
         telephone,               // phone number string
         {
           clientRefence: data.id,               // note the helper’s typo: “clientRefence”
-          successUrl: `${origin}/landing/success?session_id={CHECKOUT_SESSION_ID}`,
+          successUrl: `${origin}/landing/success?donationId=${data.id}`,
           errorUrl:  `${origin}/landing/cancel`,
         }
       );
