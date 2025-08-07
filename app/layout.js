@@ -21,9 +21,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+    
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* This is a JSX comment and will not show in HTML */}
+      <div style={{ display: "none" }}>
+        Built by @twelveisk for Maat
+      </div>
         <CartProvider>
           <Menu />
           {children}
