@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { Button } from '../../components/Button'
+import { Button } from '@/components/landing/Button'
 import { CheckCircle, XCircle, Loader2, ArrowLeft, Share2, Phone } from 'lucide-react'
 import Link from 'next/link'
 import styles from './styles.module.css'
