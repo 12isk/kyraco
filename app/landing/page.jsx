@@ -43,7 +43,7 @@ export default function EcologieLanding() {
 
 const handleTelephoneChange = e => {
   const formatted = formatPhoneNumber(e.target.value)
-  if (formatted.replace(/\s/g, "").length <= 8) {
+  if (formatted.replace(/\s/g, "").length <= 10) {
     setFormData(f => ({ ...f, telephone: formatted }))
   }
 }
