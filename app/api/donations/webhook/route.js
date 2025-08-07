@@ -1,59 +1,80 @@
 // app/api/donations/webhook/route.js
 import { NextResponse } from 'next/server'
+import { createClient }   from '@supabase/supabase-js'
 import nodemailer         from 'nodemailer'
 import { supabase } from '@/lib/supabase'
-
 
 // configure Nodemailer with Gmail App Password
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.GMAIL_USER,      // your Gmail address
-    pass: process.env.GMAIL_APP_PASS,  // a Gmail App Password
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASS,
   },
 })
 
 export async function POST(req) {
-  const event = await req.json()
-  if (event.type !== 'checkout.session.completed') {
-    return NextResponse.json({ ok: true })
-  }
+  try {
+    const event = await req.json()
+    console.log('[donations/webhook] Received event:', event)
 
-  const { id: waveSessionId, metadata } = event.data
-  const donationId = metadata.donationId
+    if (event.type !== 'checkout.session.completed') {
+      console.log('[donations/webhook] Ignoring event type:', event.type)
+      return NextResponse.json({ ok: true })
+    }
 
-  // 1) mark donation completed
-  await supabase
-    .from('donations')
-    .update({ status: 'completed', updated_at: new Date() })
-    .eq('id', donationId)
+    const { data: sessionData, metadata } = event.data || {}
+    console.log('[donations/webhook] Session data:', sessionData)
+    console.log('[donations/webhook] Metadata:', metadata)
 
-  // 2) get donation details
-  const { data: d } = await supabase
-    .from('donations')
-    .select('nom, email, montant')
-    .eq('id', donationId)
-    .single()
+    const donationId = metadata?.donationId
+    if (!donationId) {
+      console.error('[donations/webhook] Missing donationId in metadata')
+      return NextResponse.json({ error: 'Missing donationId in metadata' }, { status: 400 })
+    }
 
-  if (d?.email) {
-    // 3) send confirmation email
-    const text = `
-Bonjour ${d.nom},
+    // 1) mark donation completed
+    console.log('[donations/webhook] Marking donation completed:', donationId)
+    await supabase
+      .from('donations')
+      .update({ status: 'completed', updated_at: new Date() })
+      .eq('id', donationId)
 
-Merci pour votre don de ${d.montant} FCFA !  
+    // 2) fetch donation details
+    const { data: donation, error: fetchError } = await supabase
+      .from('donations')
+      .select('nom, email, montant')
+      .eq('id', donationId)
+      .single()
+
+    if (fetchError) {
+      console.error('[donations/webhook] Fetch donation error:', fetchError)
+    } else if (donation?.email) {
+      console.log('[donations/webhook] Sending confirmation email to:', donation.email)
+      const mailText = `
+Bonjour ${donation.nom},
+
+Merci pour votre don de ${donation.montant} FCFA !
 Votre participation est confirmée et votre ticket est officiellement enregistré.
 
 Bonne chance pour le tirage !
 — L’équipe Kyraco
-    `.trim()
+      `.trim()
 
-    await transporter.sendMail({
-      from: `"Kyraco" <${process.env.GMAIL_USER}>`,
-      to:   d.email,
-      subject: 'Merci pour votre don !',
-      text,
-    })
+      await transporter.sendMail({
+        from: `"Kyraco" <${process.env.GMAIL_USER}>`,
+        to: donation.email,
+        subject: 'Merci pour votre don !',
+        text: mailText,
+      })
+      console.log('[donations/webhook] Confirmation email sent')
+    } else {
+      console.warn('[donations/webhook] No email address to send confirmation')
+    }
+
+    return NextResponse.json({ ok: true })
+  } catch (err) {
+    console.error('[donations/webhook] Unexpected error:', err)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
-
-  return NextResponse.json({ ok: true })
 }
