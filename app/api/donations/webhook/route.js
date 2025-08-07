@@ -22,7 +22,7 @@ export async function POST(req) {
       return NextResponse.json({ ok: true })
     }
 
-    const { data: sessionData } = event.data || {}
+    const sessionData  = event.data || {}
     console.log('[donations/webhook] Session data:', sessionData)
 
     const donationId = sessionData?.client_reference;
