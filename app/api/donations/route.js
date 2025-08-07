@@ -41,8 +41,8 @@ export async function POST(req) {
         telephone,               // phone number string
         {
           clientRefence: data.id,               // note the helper’s typo: “clientRefence”
-          successUrl: `${origin}/landing/success?donationId=${data.id}`,
-          errorUrl:  `${origin}/landing/cancel`,
+          successUrl: `${origin}/landing/thankyou?donationId=${data.id}`,
+          errorUrl:  `${origin}/landing/thankyou`,
         }
       );
       console.log(
