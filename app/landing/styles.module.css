@@ -240,6 +240,16 @@
   background: rgba(234, 233, 233, 0.2) /* Dark tint for contrast */
 }
 
+@media (max-width: 728px) {
+  .heroOverlay{
+    top: 5%;
+    min-height: 60%;
+  }
+  
+}
+
+
+
 .heroContent {
   text-align: center;
   display: flex;
@@ -267,11 +277,13 @@
     font-family: "Instrument";
     font-style: italic;
     transform: scale(1.1);
+    color: #22c55e;
+
 
 }
 
 .desc{
-  font-family: 'Satoshi';
+  font-family: 'Satoshi-Regular';
   color: rgba(186, 186, 186, 0.813);
   font-size: 1.1rem;
   max-width: 80%;
