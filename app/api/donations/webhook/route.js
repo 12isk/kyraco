@@ -1,6 +1,5 @@
 // app/api/donations/webhook/route.js
 import { NextResponse } from 'next/server'
-import { createClient }   from '@supabase/supabase-js'
 import nodemailer         from 'nodemailer'
 import { supabase } from '@/lib/supabase'
 
@@ -23,14 +22,13 @@ export async function POST(req) {
       return NextResponse.json({ ok: true })
     }
 
-    const { data: sessionData, metadata } = event.data || {}
+    const { data: sessionData } = event.data || {}
     console.log('[donations/webhook] Session data:', sessionData)
-    console.log('[donations/webhook] Metadata:', metadata)
 
-    const donationId = metadata?.donationId
+    const donationId = sessionData?.client_reference;
     if (!donationId) {
-      console.error('[donations/webhook] Missing donationId in metadata')
-      return NextResponse.json({ error: 'Missing donationId in metadata' }, { status: 400 })
+      console.error('[donations/webhook] Missing client_reference')
+      return NextResponse.json({ error: 'Missing client_reference' }, { status: 400 })
     }
 
     // 1) mark donation completed
