@@ -80,9 +80,9 @@ export async function POST(req) {
 
     // 4) return Wave URL
     console.log(
-      `[donations/route] Redirecting user to Wave checkout at ${waveSession.url}`
+      `[donations/route] Redirecting user to Wave checkout at ${waveSession.wave_launch_url}`
     )
-    return NextResponse.json({ url: waveSession.url })
+    return NextResponse.json({ url: waveSession.wave_launch_url })
   } catch (err) {
     console.error('[donations/route] Unexpected error:', err)
     return NextResponse.json(
