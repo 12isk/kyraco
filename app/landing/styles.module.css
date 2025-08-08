@@ -10,6 +10,33 @@
   font-family: 'Satoshi', sans-serif;
 }
 
+/* Reuse the video overlay you already have */
+.bgImage {
+  position: fixed;
+  inset: 0;
+  z-index: -2;              /* behind everything, but above the page background */
+  background-image: url('/media/hero.jpg'); /* <-- your image path */
+  background-size: cover;   /* fill screen */
+  background-position: center center;
+  background-repeat: no-repeat;
+  transform: translateZ(0); /* prevent jank on mobile */
+  will-change: transform;
+}
+
+/* You likely already have this for the video overlay; leaving here for clarity */
+.videoBackgroundOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;              /* sits above the bg image, below content */
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.45),
+    rgba(0,0,0,0.55)
+  );
+  pointer-events: none;
+}
+
+
 /* Video Background */
 .videoBackground {
   position: fixed;
@@ -229,15 +256,27 @@
 
 .heroOverlay {
   position: absolute;
-  top: 20%;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;                       /* replaces top/left/right/bottom */
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 15;                  /* Above videoContainer */
-  background: rgba(234, 233, 233, 0.2) /* Dark tint for contrast */
+  z-index: 15;
+  background: rgba(234, 233, 233, 0.2);
+}
+
+/* content scales down on short viewports */
+.heroContent {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  position: relative;
+  z-index: 20;
+  max-width: 800px;
+  padding: clamp(1rem, 3vh, 2rem);
+  letter-spacing: -0.05em;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (max-width: 728px) {
@@ -248,25 +287,27 @@
   
 }
 
+#form {
+  scroll-margin-top: 96px; /* adjust to your header height */
+}
 
-
-.heroContent {
+/* .heroContent {
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   position: relative;
   z-index: 20;                  /* Above overlay */
-  max-width: 800px;
+  /* max-width: 800px;
   padding: 2rem;
   letter-spacing: -5%;
   justify-content: center;
   align-items: center;
-}
+}  */
 
 /* —— Title & CTA styles from your second CSS —— */
 .heroTitle {
-  font-size: 3rem;
+  font-size: clamp(1.6rem, 5.5vw, 4rem);
   font-family: 'Satoshi-Medium', sans-serif;
   color: rgba(230, 230, 230, 0.973);
   mix-blend-mode: difference;
@@ -285,7 +326,8 @@
 .desc{
   font-family: 'Satoshi-Regular';
   color: rgba(186, 186, 186, 0.813);
-  font-size: 0.9rem;
+  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  max-width: min(80%, 52ch);
   max-width: 80%;
   margin-bottom: 1.1rem;
 }
@@ -293,7 +335,10 @@
 .heroCta {
   font-size: 1.125rem;
   padding: 0.75rem 2rem;
+  margin-top: 1rem;
   width:50%;
+  width: min(80%, 420px);
+  margin-bottom: 1.1rem;
 }
 
 /* Responsive adjustments (merged) */
@@ -306,18 +351,46 @@
   }
 }
 
+@media (max-width: 768px) {
+  
+  .heroContent {
+    padding: 2rem;            /* from first's media query */
+  }
+}
+
 @media (max-width: 480px) {
   .heroTitle {
     font-size: 2rem;
     padding: 1rem 1.5rem;     /* from first's mobile rules */
   }
   .heroContent {
-    padding: 1rem;
+    padding: 1.2rem;
     gap: 1.5rem;
   }
   .heroCta {
     font-size: 1.125rem;
     padding: 0.75rem 2rem;    /* keep same as base */
+  }
+}
+
+@media (max-height: 760px) {
+  
+  .heroContent {
+    gap: 1rem;
+    padding: clamp(0.75rem, 2vh, 1.25rem);
+  }
+}
+
+/* Very short viewports (e.g., browser UI eating space) */
+@media (max-height: 580px) {
+  .videoContainer {
+    min-height: clamp(280px, 58vh, 560px);
+  }
+  .heroTitle {
+    font-size: clamp(1.4rem, 4.8vw, 2.2rem);
+  }
+  .desc {
+    max-width: 90%;
   }
 }
 
@@ -589,7 +662,15 @@
 .contactInfo {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .contactInfo {
+    justify-content: center;   /* ✅ center horizontally */
+    width: 100%;
+  }
 }
 
 .contactIcon {

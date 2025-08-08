@@ -286,25 +286,25 @@ export default function About() {
                 viewport={{ once: true, margin: "-50px" }}
               >
                 <motion.a 
-                  href="tel:+22507079823880" 
+                  href="tel:+2250707453917" 
                   className={styles.contactItem}
                   variants={staggerItem}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <Phone className={styles.contactIcon} size={18} />
-                  <span className={styles.contactText}>+225 07 07 98 23 80</span>
+                  <span className={styles.contactText}>+225 07 07 45 39 17</span>
                 </motion.a>
 
                 <motion.a 
-                  href="mailto:infos@kyraco-ci.com" 
+                  href="mailto:contact@kyraco-ci.com" 
                   className={styles.contactItem}
                   variants={staggerItem}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <Mail className={styles.contactIcon} size={18} />
-                  <span className={styles.contactText}>infos@kyraco-ci.com</span>
+                  <span className={styles.contactText}>contact@kyraco-ci.com</span>
                 </motion.a>
 
                 <motion.a 

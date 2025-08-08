@@ -130,6 +130,25 @@ export default function EcologieLanding() {
     { value: "autre", label: "Autre (veuillez préciser plus tard)" },
   ]
 
+  // inside EcologieLanding component
+useEffect(() => {
+  const scrollToHash = () => {
+    const id = window.location.hash?.slice(1);
+    if (!id) return;
+    const el = document.getElementById(id);
+    if (!el) return;
+    // wait a tick so layout is ready (images, fonts, etc.)
+    setTimeout(() => {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  };
+
+  scrollToHash();
+  window.addEventListener("hashchange", scrollToHash);
+  return () => window.removeEventListener("hashchange", scrollToHash);
+}, []);
+
+
   return (
     <div className={styles.container}>
       {/* GLOBAL BACKGROUND VIDEO + OVERLAY */}
@@ -240,10 +259,10 @@ export default function EcologieLanding() {
       </section>
 
       {/* PARTICIPATION FORM */}
-      <section id="participation-form" className={styles.formSection}>
+      <section id="form" className={styles.formSection}>
         <div className={styles.formContainer}>
           <div className={styles.glassmorphicFormContainer}>
-            <h2 className={styles.formTitle}>Participer au Tirage</h2>
+            <h2 className={styles.formTitle}>Participer à la préselection</h2>
             <form onSubmit={handleSubmit} className={styles.form}>
               {/* Nom */}
               <div className={styles.formGroup}>
@@ -427,7 +446,7 @@ export default function EcologieLanding() {
         <div className={styles.footerContainer}>
           <div className={styles.contactInfo}>
             <Phone size={16} className={styles.contactIcon} />
-            <span className={styles.contactText}>Contact: +225 07 07 98 23 80</span>
+            <span className={styles.contactText}>Contact: +225 07 07 45 39 17</span>
           </div>
           <p className={styles.footerCopyright}>
             Powered by Kyraco – Mobilité Électrique

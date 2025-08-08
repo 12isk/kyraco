@@ -132,8 +132,8 @@ function MenuInner() {
             <div className={styles.middleContainer}>
               {!isProductPage ? (
                 <div className={styles.menuItemsWrapper}>
-                  {["Accueil","Produits","À propos"].map((name,i)=>(
-                    <Link key={i} href={["/","/products","/about"][i]} className={styles.menuItem}>
+                  {["Accueil","Produits","À propos", "Campagne"].map((name,i)=>(
+                    <Link key={i} href={["/","/products","/about", "/landing"][i]} className={styles.menuItem}>
                       {name}
                     </Link>
                   ))}
@@ -210,10 +210,10 @@ function MenuInner() {
             <button className={styles.closeToggle} onClick={()=>setMobileMenuOpen(false)} aria-label="Close menu">×</button>
           </div>
           <nav className={styles.mobileNavList}>
-            {["Accueil","Produits","À propos","Contact"].map((name,i)=>(
+            {["Accueil","Produits","À propos","Campagne"].map((name,i)=>(
               <Link 
                 key={i}
-                href={["/","/products","/about","/contact"][i]}
+                href={["/","/products","/about","/landing"][i]}
                 className={styles.mobileNavItem}
                 onClick={()=>setMobileMenuOpen(false)}
               >
