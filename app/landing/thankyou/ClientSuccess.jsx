@@ -75,7 +75,7 @@ export default function ThankYou() {
       try {
         await navigator.share({
           title: 'Un Billet pour l\'Écologie',
-          text: 'Je viens de participer au tirage pour gagner un véhicule électrique !',
+          text: 'Je viens de participer à la campagne écoresponsable de Kyraco !',
           url: window.location.origin,
         })
       } catch (err) {

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState , useEffect} from "react"
 import { Button } from "@/components/landing/Button"
 import { Input } from "@/components/landing/Input"
 import { Label } from "@/components/landing/Label"
@@ -24,6 +24,7 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import styles from "./styles.module.css"
+import { supabaseBrowser } from "@/lib/supabaseBrowser"
 
 export default function EcologieLanding() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -36,7 +37,52 @@ export default function EcologieLanding() {
     immatriculation: "",
     motivation: "",
   })
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [participantCount, setParticipantCount] = useState(null);
+
+  useEffect(() => {
+  const fetchCount = async () => {
+    const { count, error } = await supabaseBrowser
+      .from("donations")
+      .select("*", { count: "exact", head: true })
+      .eq("status", "completed") // or remove this if you want *all* rows
+    if (!error) setParticipantCount(count ?? 0)
+  }
+
+  fetchCount()
+
+  // live updates
+  const channel = supabaseBrowser
+    .channel("donations-realtime")
+    .on(
+      "postgres_changes",
+      { event: "*", schema: "public", table: "donations" },
+      (payload) => {
+        if (payload.eventType === "INSERT") {
+          if (payload.new?.status === "completed") {
+            setParticipantCount((c) => (c ?? 0) + 1)
+          }
+        } else if (payload.eventType === "UPDATE") {
+          const was = payload.old?.status
+          const now = payload.new?.status
+          if (was !== "completed" && now === "completed") {
+            setParticipantCount((c) => (c ?? 0) + 1)
+          } else if (was === "completed" && now !== "completed") {
+            setParticipantCount((c) => Math.max(0, (c ?? 0) - 1))
+          }
+        } else if (payload.eventType === "DELETE") {
+          if (payload.old?.status === "completed") {
+            setParticipantCount((c) => Math.max(0, (c ?? 0) - 1))
+          }
+        }
+      }
+    )
+    .subscribe()
+
+  return () => {
+    supabaseBrowser.removeChannel(channel)
+  }
+}, [])
 
   const formatPhoneNumber = v =>
     v.replace(/\D/g, "")
@@ -360,7 +406,9 @@ export default function EcologieLanding() {
               <div className={styles.statIconContainer}>
                 <Users size={20} className={styles.trustIcon} /><div className={styles.greenDot}/>
               </div>
-              <div className={styles.statNumber}>XXX</div>
+              <div className={styles.statNumber}>{
+                participantCount === null ? "—" : participantCount.toLocaleString("fr-FR")}
+              </div>
               <div className={styles.statLabel}>participants</div>
             </div>
             <div className={`${styles.glassmorphicCard} ${styles.statCard}`}>
@@ -368,7 +416,7 @@ export default function EcologieLanding() {
                 <Car size={20} className={styles.trustIcon} /><div className={styles.greenDot}/>
               </div>
               <div className={styles.statNumber}>4</div>
-              <div className={styles.statLabel}>véhicules à gagner</div>
+              <div className={styles.statLabel}>véhicules récompenses</div>
             </div>
           </div>
         </div>
@@ -386,10 +434,12 @@ export default function EcologieLanding() {
           </p>
           <div className={styles.socialMedia}>
             <div className={styles.socialIcon}>
-              <img src=''/>
+              <img src='/media/images/partner1.png'/>
             </div>
-            <div className={styles.socialIcon} />
-            <div className={styles.socialIcon} />
+            <div className={styles.socialIcon}>
+              <img src='/media/images/partner2.png'/>
+            </div>
+            {/* <div className={styles.socialIcon} /> */}
           </div>
         </div>
       </footer>

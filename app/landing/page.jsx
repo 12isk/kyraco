@@ -3,11 +3,11 @@ import ClientPage from './ClientPage'
 
 export const metadata = {
   title: "Un Billet pour l'Écologie - KYRACO",
-  description: "Participez par don volontaire et gagnez un véhicule électrique en Côte d'Ivoire. Mobilité durable accessible.",
+  description: "Participez par don volontaire et contribuez à la mobilité durable accessible.",
   keywords: "véhicule électrique, Côte d'Ivoire, KYRACO, mobilité durable, don volontaire",
   openGraph: {
     title: "Un Billet pour l'Écologie - KYRACO",
-    description: "Gagnez un véhicule électrique en soutenant la mobilité durable",
+    description: "Participez et contribuez à un avenir plus vert.",
     url: "https://kyraco-ci.com/landing",
     siteName: "KYRACO",
     images: [
@@ -21,10 +21,11 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Un Billet pour l'Écologie - KYRACO",
-    description: "Participez et gagnez un véhicule électrique",
+    description: "Participez et contribuez à un avenir plus vert.",
     images: ["/media/images/campaign3.jpg"],
   },
 }
+
 
 export default function Page() {
   return <ClientPage />
