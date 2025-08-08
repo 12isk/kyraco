@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import styles from "./styles.module.css";
 import { useCart } from "@/app/CartContext";
 import { useRouter } from "next/navigation";
+import { ShoppingCart } from "lucide-react";
 
 // Hook: detect mobile viewport ≤ breakpoint px
 function useIsMobile(breakpoint = 900) {
@@ -55,17 +56,15 @@ const formatter = new Intl.NumberFormat("fr-FR", {
 
 export default function Menu() {
   const pathname = usePathname() || "";
+  const hide = /^\/landing(\/.*)?$/.test(pathname) || pathname === "/checkout";
+  if (hide) return null;
+  return <MenuInner />;
+}
+
+function MenuInner() {
+  const pathname = usePathname() || "";
   const isProductPage = /^\/products\/[^\/]+$/.test(pathname);
   const isMobile = useIsMobile(900);
-
-  // detect landing or checkout
-  const isLandingPage = /^\/landing(\/.*)?$/.test(pathname);
-  const isCheckoutPage = pathname === "/checkout";
-
-  // if we’re on landing *or* checkout, don’t render the menu
-  if (isLandingPage || isCheckoutPage) {
-    return null;
-  }
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
@@ -133,8 +132,8 @@ export default function Menu() {
             <div className={styles.middleContainer}>
               {!isProductPage ? (
                 <div className={styles.menuItemsWrapper}>
-                  {["Accueil","Produits","À propos","Contact"].map((name,i)=>(
-                    <Link key={i} href={["/","/products","/about","/contact"][i]} className={styles.menuItem}>
+                  {["Accueil","Produits","À propos"].map((name,i)=>(
+                    <Link key={i} href={["/","/products","/about"][i]} className={styles.menuItem}>
                       {name}
                     </Link>
                   ))}
@@ -162,12 +161,13 @@ export default function Menu() {
           {!isProductPage && showDesktopMenu && (
             <button className={styles.cartLink} onClick={handleCartOpen}>
               <div className={styles.cartIconWrapper}>
-                <img src="/icons/cart.svg" alt="Cart" className={styles.cartIcon}/>
+                <ShoppingCart color="#ffffff" />
                 {cartCount>0&&(
                   <div className={styles.smallBadge}>
                     <span className={styles.smallBadgeText}>{cartCount}</span>
                   </div>
                 )}
+                
               </div>
             </button>
           )}

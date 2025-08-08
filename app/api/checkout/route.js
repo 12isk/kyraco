@@ -1,154 +1,61 @@
-import { supabase } from '@/lib/supabase'
-import { createCheckoutSession } from '@/lib/waveApi'
-// // app/api/checkout/route.js
-// import { NextResponse } from 'next/server'
-// import { supabase } from '@/lib/supabase'
-// import { createWaveSession } from '@/lib/wave' 
-
-// export async function POST(request) {
-//   const { customer, amount, phoneNumber } = await request.json()
-
-//   // 1️⃣ Insert a new order row (status defaults to 'processing')
-//   const shipping_address = customer.suite
-//     ? `${customer.address}, ${customer.suite}`
-//     : customer.address
-
-//   const { data: draft, error: draftError } = await supabase
-//     .from('orders')
-//     .insert([{
-//       customer_name:    `${customer.firstName} ${customer.lastName}`,
-//       customer_email:    customer.email,
-//       customer_phone:    customer.phone,
-//       shipping_address,
-//       city:              customer.city,
-//       total:             amount,
-//       // omit payment_status → DB default 'processing'
-//     }])
-//     .select('id')
-//     .single()
-
-//   if (draftError) {
-//     console.error('Draft insert error:', draftError)
-//     return NextResponse.json({ error: draftError.message }, { status: 500 })
-//   }
-
-//   const orderId = draft.id
-
-//   // 2️⃣ Kick off Wave, embedding orderId in metadata
-//   const { launchUrl, error: waveError } = await createWaveSession({
-//     amount,
-//     phoneNumber,
-//     metadata: { orderId }
-//   })
-
-//   if (waveError) {
-//     console.error('Wave session error:', waveError)
-//     return NextResponse.json({ error: waveError }, { status: 500 })
-//   }
-
-//   // 3️⃣ Send back both the Wave URL and the new orderId
-//   return NextResponse.json({
-//     wave_launch_url: launchUrl,
-//     orderId
-//   })
-// }
-
+// app/api/checkout/route.js
 import { NextResponse } from 'next/server'
+import { supabase } from '@/lib/supabase'       // service role
+import { createCheckoutSession } from '@/lib/waveApi'     // your helper
 
-// export async function POST(request) {
-//   const { customer, amount, phoneNumber } = await request.json()
+export async function POST(req) {
+  try {
+    const { customer, amount, phoneNumber, items } = await req.json()
 
-//   // Build shipping address
-//   const shipping_address = customer.suite
-//     ? `${customer.address}, ${customer.suite}`
-//     : customer.address
+    const shipping_address = customer.suite
+      ? `${customer.address}, ${customer.suite}`
+      : customer.address
 
-//   // 1️⃣ Create draft order (status defaults to 'processing')
-//   const { data: draft, error: draftError } = await supabase
-//     .from('orders')
-//     .insert([{
-//       customer_name:   `${customer.firstName} ${customer.lastName}`,
-//       customer_email:   customer.email,
-//       customer_phone:   customer.phone,
-//       shipping_address,
-//       city:             customer.city,
-//       total:            amount
-//       // payment_status defaults to 'processing'
-//     }])
-//     .select('id')
-//     .single()
+    // 1) create order (processing)
+    const { data: order, error: insertError } = await supabase
+      .from('orders')
+      .insert([{
+        customer_name:  `${customer.firstName} ${customer.lastName}`.trim(),
+        customer_email:  customer.email || null,
+        customer_phone:  customer.phone,
+        shipping_address,
+        city:            customer.city,
+        items,                           // jsonb
+        total:           amount,
+        payment_status: 'processing',    // ✅ matches constraint
+      }])
+      .select('id')
+      .single()
 
-//   if (draftError) {
-//     console.error('Draft insert error:', draftError)
-//     return NextResponse.json({ error: draftError.message }, { status: 500 })
-//   }
-//   const orderId = draft.id
+    if (insertError) {
+      console.error('[checkout] insert error', insertError)
+      return NextResponse.json({ error: insertError.message }, { status: 500 })
+    }
 
-//   // 2️⃣ Prepare Wave checkout with callback URLs
-//   const host       = process.env.NEXT_PUBLIC_BASE_URL
-//   const successUrl = `${host}/checkout/success?order_id=${orderId}`
-//   const cancelUrl  = `${host}/checkout/cancel?order_id=${orderId}`
+    const orderId = order.id
+    const origin  = req.headers.get('origin') || process.env.NEXT_PUBLIC_APP_URL
 
-//   const { launchUrl, error: waveError } = await createCheckoutSession({
-//     amount,
-//     phoneNumber,
-//     metadata:       { orderId },
-//     callback_urls: { success: successUrl, cancel: cancelUrl }
-//   })
+    // 2) wave session (IMPORTANT: correct key name)
+    const session = await createCheckoutSession(amount, phoneNumber, {
+      clientReference: orderId,                                 // ✅ correct spelling
+      successUrl: `${origin}/checkout/success?order_id=${orderId}&session_id={SESSION_ID}`,
+      errorUrl:   `${origin}/checkout/error?order_id=${orderId}`,
+    })
 
-//   if (waveError) {
-//     console.error('Wave session error:', waveError)
-//     return NextResponse.json({ error: waveError }, { status: 500 })
-//   }
+    // 3) save session id
+    await supabase
+      .from('orders')
+      .update({ wave_session_id: session.id })
+      .eq('id', orderId)
 
-//   // 3️⃣ Return Wave URL and orderId
-//   return NextResponse.json({ wave_launch_url: launchUrl, orderId })
-// }
-
-export async function POST(request) {
-  const { customer, amount, phoneNumber, items } = await request.json()
-
-  // build shipping_address...
-  const shipping_address = customer.suite
-    ? `${customer.address}, ${customer.suite}`
-    : customer.address
-
-  // 1️⃣ draft the order, now including items
-  const { data: draft, error: draftError } = await supabase
-    .from('orders')
-    .insert([{
-      customer_name:    `${customer.firstName} ${customer.lastName}`,
-      customer_email:   customer.email,
-      customer_phone:   customer.phone,
-      shipping_address,
-      city:             customer.city,
-      items,            // ← here!
-      total:            amount,
-      payment_status:   'pending',
-    }])
-    .select('id')
-    .single()
-
-  if (draftError) {
-    console.error('Draft insert error:', draftError)
-    return NextResponse.json({ error: draftError.message }, { status: 500 })
+    // 4) return both
+    return NextResponse.json({
+      wave_launch_url: session.wave_launch_url || session.wave_launch_url || session.wave_launch_url, // depends on your helper
+      orderId,
+      session_id: session.id
+    })
+  } catch (err) {
+    console.error('[checkout] unexpected', err)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
-
-  const orderId = draft.id
-
-  // 2️⃣ create the Wave session...
-  const origin  = request.headers.get('origin') || process.env.NEXT_PUBLIC_APP_URL
-  const session = await createCheckoutSession(amount, phoneNumber, {
-    clientReference: orderId,
-    errorUrl:        `${origin}/checkout/error?order_id=${orderId}`,
-    successUrl:      `${origin}/checkout/success?order_id=${orderId}`,
-  })
-
-  // 3️⃣ update wave_payment_id, return session
-  await supabase
-    .from('orders')
-    .update({ wave_payment_id: session.id })
-    .eq('id', orderId)
-
-  return NextResponse.json(session)
 }

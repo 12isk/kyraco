@@ -1,7 +1,7 @@
 // ProductGridContainer.jsx
 "use client";
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabaseBrowser } from '@/lib/supabaseBrowser'; 
 import ProductGrid from '../productGrid';
 import ProductCard from '../productCards';
 import FilterControls from '../filterControls';
@@ -53,7 +53,7 @@ export default function ProductGridContainer() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
+      const { data, error } = await supabaseBrowser
         .from('products')
         .select('*')
         .eq('active', true);

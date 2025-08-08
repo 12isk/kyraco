@@ -1,5 +1,4 @@
 "use client";
-import { supabase } from '@/lib/supabase';
 import React, { useState, useEffect } from 'react'
 import ProductGrid from '@/components/products/productGrid';
 import ProductCard from '@/components/products/productCards';

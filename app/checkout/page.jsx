@@ -4,11 +4,12 @@ import { useState } from "react"
 import { useCart } from "@/app/CartContext"
 import { useRouter } from "next/navigation"
 import styles from "./styles.module.css"
+import { AlertModal, useAlertModal } from "@/components/alertModal"
 
 export default function CheckoutPage() {
   const { cart } = useCart()
   const router = useRouter()
-
+  const { alert, closeAlert, showSuccess, showError, showInfo } = useAlertModal()
   // Personal info
   const [email, setEmail] = useState("")
   const [firstName, setFirstName] = useState("")
@@ -50,124 +51,86 @@ export default function CheckoutPage() {
     if (f.replace(/\s/g, "").length <= 10) setWavePhone(f)
   }
 
-  // async function handlePay() {
-
-  //   const customer = {
-  //     firstName: firstName,
-  //     lastName: lastName,
-  //     phone: phone,
-  //     address: address,
-  //     city: city
-  //   };
-
-  //   try {
-  //     const orderId = crypto.randomUUID();
-  //     const res = await fetch("/api/checkout", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         customer: customer,
-  //         orderId: orderId,
-  //         amount: total,
-  //         phoneNumber: waveCountryCode + wavePhone.replace(/\s/g, ""),
-  //       }),
-  //     })
-  //     const session = await res.json()
-  //     localStorage.setItem("session", JSON.parse("session"));
-  //     if (!res.ok) throw new Error(session.error)
-  //     router.push(session.wave_launch_url)
-  //   } catch (err) {
-  //     console.error(err)
-  //     alert("Erreur de paiement : " + err.message)
-  //   }
-  // }
-  // app/checkout/page.tsx  (or .jsx)
-
-
-  // async function handlePay() {
-  //   // build a complete customer object, including email & items
-  //   const customer = {
-  //     firstName,
-  //     lastName,
-  //     email,
-  //     phone,
-  //     address,
-  //     suite,
-  //     city,
-  //     items: cart.map(i => ({
-  //       id:       i.id,
-  //       name:     i.name,
-  //       variant:  i.variant || null,
-  //       price:    i.price,
-  //       quantity: i.quantity
-  //     }))
-  //   }
-
-  //   try {
-  //     const orderId = crypto.randomUUID()
-  //     const res = await fetch('/api/checkout', {
-  //       method:  'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body:    JSON.stringify({
-  //         orderId,
-  //         amount:      total,
-  //         phoneNumber: waveCountryCode + wavePhone.replace(/\s/g, ''),
-  //         customer
-  //       }),
-  //     })
-
-  //     const session = await res.json()
-  //     if (!res.ok) throw new Error(session.error)
-
-  //     // store it if you need on the success page
-  //     localStorage.setItem('checkout_session', JSON.stringify(session))
-  //     localStorage.setItem('checkout_orderId', orderId)
-
-  //     // redirect into Wave
-  //     router.push(session.wave_launch_url)
-  //   } catch (err) {
-  //     console.error(err)
-  //     alert('Erreur de paiement : ' + err.message)
-  //   }
-  // }
+  const [paying, setPaying] = useState(false)
 
   async function handlePay() {
-    const customer = { firstName, lastName, email, phone, address, suite, city }
+    // basic guards
+    if (cart.length === 0) {
+      showError("Panier vide", "Votre panier est vide.")
+      return
+    }
+
+    const rawWavePhone = wavePhone.replace(/\s/g, "")
+    if (rawWavePhone.length !== 10) {
+      showError("Numéro Wave invalide", "Entrez un numéro Wave valide (10 chiffres).")
+      return
+    }
+
+    // Build customer object (email can be empty/null)
+    const customer = {
+      firstName,
+      lastName,
+      email: email || null,
+      phone,
+      address,
+      suite,
+      city,
+    }
+
+    // Wave expects an integer amount (XOF has no decimals)
+    const amountInt = Math.round(total)
+
+    setPaying(true)
+    // showInfo("Initialisation du paiement…", { customDuration: 2000 })
     try {
-      const generatedOrderId = crypto.randomUUID()
-      const res = await fetch('/api/checkout', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    customer,
-    amount: total,
-    phoneNumber: waveCountryCode + wavePhone.replace(/\s/g, ''),
-    items: cart.map(i => ({
-      id:       i.id,
-      name:     i.name,
-      variant:  i.variant || null,
-      price:    i.price,
-      quantity: i.quantity
-    }))
-  })
-})
-      const { wave_launch_url, orderId: responseOrderId, error } = await res.json()
-      if (!res.ok) throw new Error(error)
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer,
+          amount: amountInt,
+          phoneNumber: waveCountryCode + rawWavePhone,
+          items: cart.map((i) => ({
+            id: i.id,
+            name: i.name,
+            variant: i.variant || null,
+            price: i.price,
+            quantity: i.quantity,
+          })),
+        }),
+      })
 
-      // save for later
-      localStorage.setItem('checkout_orderId', responseOrderId)
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Payment init failed")
 
-      // redirect into Wave
+      const { wave_launch_url, orderId, session_id } = data
+
+      // stash for success page or later checks
+      if (orderId) localStorage.setItem("checkout_orderId", String(orderId))
+      if (session_id) localStorage.setItem("checkout_session_id", String(session_id))
+
+      showSuccess("Redirection", "Ouverture du paiement Wave…")
       router.push(wave_launch_url)
     } catch (err) {
       console.error(err)
-      alert('Erreur de paiement : ' + err.message)
+      showError("Erreur de paiement", err?.message || "Une erreur est survenue.")
+    } finally {
+      setPaying(false)
     }
   }
 
-
   return (
+    
     <div className={styles.checkout}>
+      <AlertModal
+        isOpen={alert.isOpen}
+        onClose={closeAlert}
+        title={alert.title}
+        message={alert.message}
+        type={alert.type}
+        autoClose={alert.autoClose}
+        customDuration={alert.customDuration}
+      />
       <div className={styles.formContainer}>
         {/* Contact */}
         <div className={styles.section}>
@@ -410,8 +373,8 @@ export default function CheckoutPage() {
           <span>Local taxes, duties or customs clearance fees may apply</span>
         </div>
 
-        <button className={styles.payButton} onClick={handlePay}>
-          Complete order
+        <button className={styles.payButton} onClick={handlePay} disabled={paying}>
+          {paying ? "Initialisation du paiement…" : "Complete order"}
         </button>
       </div>
     </div>

@@ -126,7 +126,7 @@ export default function EcologieLanding() {
             <div className={styles.mobileMenuContent}>
               <nav className={styles.mobileNav}>
                 {[
-                  { href: "#prizes", label: "Véhicules à Gagner" },
+                  { href: "#prizes", label: "Récompenses" },
                   { href: "#participation", label: "Participer" },
                   { href: "#contact", label: "Contact" },
                 ].map((item, i) => (
@@ -175,7 +175,7 @@ export default function EcologieLanding() {
       {/* PRIZES SECTION */}
       <section id="prizes" className={styles.prizesSection}>
         <div className={styles.prizesContainer}>
-          <h2 className={styles.sectionTitle}>Véhicules à Gagner</h2>
+          <h2 className={styles.sectionTitle}>Récompenses</h2>
           <div className={styles.prizesGrid}>
             {[
               {
@@ -258,7 +258,7 @@ export default function EcologieLanding() {
                   value={formData.email}
                   onChange={e => setFormData(f => ({ ...f, email: e.target.value }))}
                   placeholder="votre@email.com"
-                  required
+                  
                 />
               </div>
 
@@ -280,7 +280,7 @@ export default function EcologieLanding() {
 
               {/* NEW: Immatriculation du dernier véhicule (optional) */}
               <div className={styles.formGroup}>
-                <Label htmlFor="immatriculation">Immatriculation du dernier véhicule utilisé (facultatif)</Label>
+                <Label htmlFor="immatriculation">Immatriculation du dernier véhicule utilisé</Label>
                 <Input
                   id="immatriculation"
                   type="text"
@@ -292,7 +292,7 @@ export default function EcologieLanding() {
 
               {/* NEW: Motivation (optional dropdown) */}
               <div className={styles.formGroup}>
-                <Label htmlFor="motivation">Pourquoi souhaitez-vous participer ? (facultatif)</Label>
+                <Label htmlFor="motivation">Pourquoi souhaitez-vous participer ?</Label>
                   <Select
                     value={formData.motivation || ""}
                     onValueChange={(value) => {
@@ -301,10 +301,11 @@ export default function EcologieLanding() {
                         ...f,
                         motivation: value,                  // code you save to DB
                       }))
+                      
                     }}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Sélectionnez une raison (facultatif)" />
+                      <SelectValue placeholder="Sélectionnez une raison" />
                     </SelectTrigger>
                     <SelectContent>
                       {MOTIVATIONS.map(m => (

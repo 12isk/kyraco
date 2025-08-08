@@ -40,7 +40,7 @@
   font-size: clamp(2.5rem, 8vw, 5rem);
   line-height: 1.05;
   font-weight: 600;
-  letter-spacing: -0.03em;
+  letter-spacing: -5%;
   margin: 0;
   word-break: break-word;
 }
