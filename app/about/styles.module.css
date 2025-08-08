@@ -394,8 +394,5 @@
     transform: none !important;
   }
 
-  /* Stop smooth scrolling without using * (works in CSS Modules) */
-  :global(html:focus-within) {
-    scroll-behavior: auto;
-  }
+
 }
