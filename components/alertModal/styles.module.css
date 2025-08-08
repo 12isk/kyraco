@@ -1,0 +1,246 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal {
+  position: relative;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+  margin: 1rem;
+  overflow: hidden;
+}
+
+/* Modal Type Variations */
+.modal.success {
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  box-shadow: 0 8px 32px rgba(34, 197, 94, 0.15);
+}
+
+.modal.error {
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  box-shadow: 0 8px 32px rgba(239, 68, 68, 0.15);
+}
+
+.modal.warning {
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.15);
+}
+
+.modal.info {
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15);
+}
+
+/* Close Button */
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.closeButton:hover {
+  background: rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.closeButton:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+.closeIcon {
+  color: white;
+  stroke-width: 2.5;
+}
+
+/* Content */
+.content {
+  padding-left: 1rem; /* Space for close button */
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+.successIcon {
+  color: #22c55e;
+}
+
+.errorIcon {
+  color: #ef4444;
+}
+
+.warningIcon {
+  color: #f59e0b;
+}
+
+.infoIcon {
+  color: #3b82f6;
+}
+
+.title {
+  font-family: 'Satoshi-Medium', sans-serif;
+  font-size: 1.25rem;
+  color: #1f2937;
+  margin: 0;
+  font-weight: 600;
+}
+
+.message {
+  color: #4b5563;
+  line-height: 1.6;
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Progress Bar */
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  border-radius: 0 0 24px 24px;
+}
+
+.modal.error .progressBar {
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+
+.modal.warning .progressBar {
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+}
+
+.modal.info .progressBar {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .modal {
+    padding: 1.5rem;
+    margin: 0.5rem;
+    border-radius: 20px;
+  }
+  
+  .content {
+    padding-left: 0.5rem;
+  }
+  
+  .closeButton {
+    top: 0.75rem;
+    left: 0.75rem;
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  
+  .closeIcon {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .title {
+    font-size: 1.125rem;
+  }
+  
+  .message {
+    font-size: 0.9rem;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .modal {
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #000;
+  }
+  
+  .closeButton {
+    background: #000;
+    border: 2px solid #fff;
+  }
+  
+  .closeIcon {
+    color: #fff;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .progressBar {
+    transition: none;
+  }
+}
+
+/* Focus Management */
+.modal:focus {
+  outline: none;
+}
+
+/* Backdrop Blur Fallback */
+@supports not (backdrop-filter: blur(20px)) {
+  .modal {
+    background: rgba(255, 255, 255, 0.9);
+  }
+  
+  .closeButton {
+    background: rgba(0, 0, 0, 0.8);
+  }
+  
+  .overlay {
+    background: rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* Animation Performance */
+.modal,
+.closeButton {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* Loading State */
+.modal.loading {
+  pointer-events: none;
+}
+
+.modal.loading .closeButton {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

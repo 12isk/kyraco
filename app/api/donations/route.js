@@ -40,7 +40,7 @@ export async function POST(req) {
         Number(montant),         // amount as a number
         telephone,               // phone number string
         {
-          clientRefence: data.id,               // note the helper’s typo: “clientRefence”
+          clientReference: data.id,               // note the helper’s typo: “clientRefence”
           successUrl: `${origin}/landing/thankyou?donationId=${data.id}`,
           errorUrl:  `${origin}/landing/thankyou`,
         }

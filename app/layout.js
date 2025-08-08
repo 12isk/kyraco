@@ -18,7 +18,7 @@ export const metadata = {
   title: "Kyraco CI",
   description:
     "KYRACO Côte d'Ivoire : véhicules électriques, transport, communication digitale, impression. Solutions durables pour entreprises et institutions.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://kyraco-ci"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://kyraco-ci.com"),
   openGraph: {
     title: "Kyraco CI",
     description:

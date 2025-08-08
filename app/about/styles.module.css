@@ -1,0 +1,401 @@
+/* Import Satoshi Font */
+@import url('../../css/satoshi.css');
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 25%, #bbf7d0 50%, #86efac 75%, #4ade80 100%);
+  font-family: 'Satoshi', sans-serif;
+  position: relative;
+}
+
+/* ====== Main Content (header/menu removed) ====== */
+.main {
+  padding: 4rem 1rem 2rem; /* tightened since header is gone */
+  position: relative;
+  z-index: 10;
+}
+
+.contentContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ====== Hero Section ====== */
+.heroSection {
+  margin-bottom: 3rem;
+}
+
+.heroContent {
+  text-align: center;
+}
+
+.pageTitle {
+  font-size: 2.25rem;         /* smaller */
+  font-family: 'Satoshi-Medium', sans-serif;
+  color: #1f2937;
+  margin: 0 0 1.25rem 0;
+  font-weight: 700;
+}
+
+.heroDescription {
+  font-size: 1.1rem;          /* smaller */
+  color: #4b5563;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ====== Section Styles ====== */
+.section {
+  margin-bottom: 2rem;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;     /* center the icon + title */
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.sectionIcon {
+  color: #22c55e;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;           /* smaller */
+  font-family: 'Satoshi-Medium', sans-serif;
+  color: #1f2937;
+  margin: 0;
+}
+
+/* ====== Glassmorphic Card ====== */
+.glassmorphicCard {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px);
+  border-radius: 36px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  margin-bottom: 2rem;
+
+  /* Performance */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ====== Mission Section ====== */
+.missionText {
+  font-size: 1rem;             /* smaller */
+  color: #4b5563;
+  line-height: 1.7;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ====== Services Section ====== */
+.servicesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.serviceItem {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  padding: 1.5rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.2s ease;
+  will-change: transform, opacity;
+}
+
+.serviceItem:hover {
+  transform: translateY(-2px);
+}
+
+.serviceIcon {
+  font-size: 2.25rem;          /* slightly smaller */
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.serviceTitle {
+  font-size: 1.1rem;           /* smaller */
+  font-family: 'Satoshi-Medium', sans-serif;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+}
+
+.serviceDescription {
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+  font-size: 0.95rem;          /* smaller */
+}
+
+/* ====== Engagement Section ====== */
+.engagementIntro {
+  font-size: 1rem;             /* smaller */
+  color: #4b5563;
+  line-height: 1.7;
+  text-align: center;
+  margin-bottom: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.engagementGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.engagementItem {
+  background: rgba(34, 197, 94, 0.1);
+  border-radius: 24px;
+  padding: 1.5rem;
+  text-align: center;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  will-change: transform, opacity;
+}
+
+.engagementItem:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.engagementIcon {
+  font-size: 2.25rem;          /* slightly smaller */
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.engagementTitle {
+  font-size: 1.1rem;           /* smaller */
+  font-family: 'Satoshi-Medium', sans-serif;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+}
+
+.engagementDescription {
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+  font-size: 0.95rem;          /* smaller */
+}
+
+/* ====== Legal Information ====== */
+.legalInfo {
+  text-align: center;
+}
+
+.legalText {
+  font-size: 0.95rem;          /* smaller */
+  color: #4b5563;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.addressInfo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  padding: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.addressIcon {
+  color: #22c55e;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.addressText {
+  color: #4b5563;
+  line-height: 1.6;
+  text-align: left;
+  font-size: 0.95rem;          /* smaller */
+}
+
+/* ====== Contact Section ====== */
+.contactGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  padding: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  will-change: transform, opacity;
+}
+
+.contactItem:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.contactIcon {
+  color: #22c55e;
+  flex-shrink: 0;
+}
+
+.contactText {
+  color: #1f2937;
+  font-weight: 500;
+  font-size: 0.95rem;          /* smaller */
+}
+
+/* ====== CTA Section ====== */
+.ctaSection {
+  margin-top: 3rem;
+}
+
+.ctaTitle {
+  font-size: 1.5rem;           /* smaller */
+  font-family: 'Satoshi-Medium', sans-serif;
+  color: #1f2937;
+  text-align: center;
+  margin: 0 0 0.75rem 0;
+}
+
+.ctaDescription {
+  font-size: 1rem;             /* smaller */
+  color: #4b5563;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ctaButton {
+  display: block;
+  margin: 0 auto;
+  background: #22c55e !important;
+  color: white !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  font-weight: bold !important;
+  box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3) !important;
+}
+
+/* ====== Footer ====== */
+.footer {
+  padding: 2rem 1rem;
+  position: relative;
+  z-index: 10;
+}
+
+.footerContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footerCopyright {
+  color: #6b7280;
+  font-size: 0.85rem;          /* slightly smaller */
+  margin: 0;
+}
+
+/* ====== Button (kept for CTA link styling if reused) ====== */
+.pillButton {
+  background-color: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 36px;
+  color: #1f2937;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: none;
+  padding: 0.6rem 1.25rem;
+}
+
+.pillButton:hover {
+  background-color: rgba(255, 255, 255, 0.35);
+  transform: scale(1.03);
+}
+
+/* ====== Responsive ====== */
+@media (min-width: 768px) {
+  .pageTitle { font-size: 3rem; }
+  .sectionTitle { font-size: 1.75rem; }
+  .servicesGrid { grid-template-columns: repeat(2, 1fr); }
+  .engagementGrid { grid-template-columns: repeat(2, 1fr); }
+  .contactGrid { grid-template-columns: repeat(3, 1fr); }
+  .glassmorphicCard { padding: 3rem; }
+}
+
+@media (min-width: 1024px) {
+  .servicesGrid { grid-template-columns: repeat(3, 1fr); }
+  .engagementGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .pageTitle { font-size: 2rem; }
+  .sectionTitle { font-size: 1.35rem; }
+  .glassmorphicCard {
+    padding: 1.5rem;
+    margin: 0 0.5rem 2rem;
+  }
+  .main { padding: 3.5rem 0.5rem 2rem; }
+  .addressInfo {
+    flex-direction: column;
+    text-align: center;
+  }
+  .addressText { text-align: center; }
+}
+
+/* ====== High Contrast ====== */
+@media (prefers-contrast: high) {
+  .glassmorphicCard {
+    border: 2px solid #000;
+    background: rgba(255, 255, 255, 0.9);
+  }
+}
+
+/* ====== Reduced Motion (no universal selector) ====== */
+@media (prefers-reduced-motion: reduce) {
+  /* kill transitions/animations on the components that move */
+  .serviceItem,
+  .engagementItem,
+  .contactItem,
+  .pillButton,
+  .ctaButton,
+  .glassmorphicCard,
+  .addressInfo {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* neutralize hover transforms */
+  .serviceItem:hover,
+  .engagementItem:hover,
+  .contactItem:hover,
+  .pillButton:hover {
+    transform: none !important;
+  }
+
+  /* Stop smooth scrolling without using * (works in CSS Modules) */
+  :global(html:focus-within) {
+    scroll-behavior: auto;
+  }
+}

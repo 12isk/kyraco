@@ -18,12 +18,13 @@ export default function Campaign() {
         <div className={styles.campaignOverlayText}>
         <h2 className={styles.campaignTitle}>Mobilité Solidaire </h2>
         <p className={styles.campaignDesc}>
-            Rejoignez notre initiative citoyenne pour offrir des véhicules électriques aux professionnels du transport. Ensemble, construisons une mobilité plus verte en Côte d'Ivoire.
+            Participez à notre campagne de dons et devenez Écomobiliste.
+            Votre geste pour un avenir plus vert.
         </p>
         
       </div>
       <div className={styles.campaignBtnContainer}>
-        <Link href="/campaign">
+        <Link href="/landing">
           <GenericBtn text="Participer" />
         </Link>
       </div>

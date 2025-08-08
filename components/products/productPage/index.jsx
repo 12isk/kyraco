@@ -5,16 +5,23 @@ import styles from "./styles.module.css";
 import CartBtn from "@/components/buttons/cartBtn";
 import { useCart } from "@/app/CartContext";
 
+// ✅ import modal + hook
+import { AlertModal, useAlertModal } from "@/components/alertModal";
+
 export default function ProductPage({ product }) {
   const [isMobile, setIsMobile] = useState(false);
   const { addItem } = useCart();
+
+  // ✅ modal hook
+  const { alert, showSuccess, showError, closeAlert } = useAlertModal();
 
   // Slider state for mobile
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const sliderRef = useRef(null);
 
-  // Detect mobile viewport
+  // Detect mobile viewport (client-only)
   useEffect(() => {
+    if (typeof window === "undefined") return;
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -40,15 +47,20 @@ export default function ProductPage({ product }) {
 
   // Add to cart handler
   const handleAddToCart = () => {
-    addItem({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      variant: product.variant,
-      image: product.images[0],
-      quantity: 1,
-    });
-    alert("Produit ajouté au panier !");
+    try {
+      addItem({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        variant: product.variant,
+        image: product.images?.[0],
+        quantity: 1,
+      });
+      showSuccess(`${product.name} a été ajouté au panier.`);
+    } catch (e) {
+      console.error(e);
+      showError("Impossible d’ajouter au panier.");
+    }
   };
 
   return (
@@ -72,13 +84,7 @@ export default function ProductPage({ product }) {
         )}
 
         {/* Image display */}
-        <div
-          className={
-            isMobile
-              ? styles.mobileImageSection
-              : styles.mainImageContainer
-          }
-        >
+        <div className={isMobile ? styles.mobileImageSection : styles.mainImageContainer}>
           {isMobile ? (
             <>
               <div
@@ -87,12 +93,7 @@ export default function ProductPage({ product }) {
                 className={styles.mobileSlider}
               >
                 {product.images.map((img, idx) => (
-                  <img
-                    key={idx}
-                    src={img}
-                    alt={`product-${idx}`}
-                    className={styles.mobileImage}
-                  />
+                  <img key={idx} src={img} alt={`product-${idx}`} className={styles.mobileImage} />
                 ))}
               </div>
               <div className={styles.sliderIndicators}>
@@ -100,9 +101,7 @@ export default function ProductPage({ product }) {
                   <button
                     key={idx}
                     className={`${styles.lineIndicator} ${
-                      idx === currentImageIndex
-                        ? styles.activeLineIndicator
-                        : ""
+                      idx === currentImageIndex ? styles.activeLineIndicator : ""
                     }`}
                     onClick={() => goToSlide(idx)}
                   />
@@ -124,18 +123,24 @@ export default function ProductPage({ product }) {
         <div className={styles.info}>
           <h2 className={styles.name}>{product.name}</h2>
           <p className={styles.subcategory}>{product.category}</p>
-          <p className={styles.price}>
-            CFA{product.price.toLocaleString()}
-          </p>
+          <p className={styles.price}>CFA{product.price.toLocaleString()}</p>
           <p className={styles.description}>{product.description}</p>
           <div className={styles.actions}>
-            <CartBtn
-              text="Ajouter au panier"
-              onClick={handleAddToCart}
-            />
+            <CartBtn text="Ajouter au panier" onClick={handleAddToCart} />
           </div>
         </div>
       </div>
+
+      {/* ✅ Mount the modal once */}
+      <AlertModal
+        isOpen={alert.isOpen}
+        onClose={closeAlert}
+        title={alert.title}
+        message={alert.message}
+        type={alert.type}
+        autoClose={alert.autoClose}
+        customDuration={1000}
+      />
     </div>
   );
 }
