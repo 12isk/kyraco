@@ -8,13 +8,13 @@ export async function POST(req) {
     const payload = await req.json()
     console.log('[donations/route] Incoming payload:', payload)
 
-    const { nom, telephone, profession, montant, email } = payload
+    const { nom, telephone, profession, montant, email, immatriculation, motivation } = payload
 
     // 1) insert pending donation
     console.log('[donations/route] Inserting donation into Supabase...')
     const { data, error: insertError } = await supabase
       .from('donations')
-      .insert([{ nom, telephone, profession, montant, email }])
+      .insert([{ nom, telephone, profession, montant, email, immatriculation, motivation }])
       .select()
       .single()
 

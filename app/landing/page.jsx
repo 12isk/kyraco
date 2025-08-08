@@ -12,7 +12,7 @@ export const metadata = {
     siteName: "KYRACO",
     images: [
       {
-        url: "/media/images/campaign2.jpg",
+        url: "/media/images/campaign3.jpg",
         width: 1200,
         height: 630,
       },
@@ -22,7 +22,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Un Billet pour l'Écologie - KYRACO",
     description: "Participez et gagnez un véhicule électrique",
-    images: ["/media/images/campaign2.jpg"],
+    images: ["/media/images/campaign3.jpg"],
   },
 }
 

@@ -164,16 +164,16 @@ export default function ThankYou() {
                   </h2>
                   <p className={styles.successDescription}>
                     Merci pour votre contribution à la mobilité électrique en Côte d'Ivoire. 
-                    Vous recevrez un email de confirmation avec tous les détails du tirage.
+                    Vous recevrez un email de confirmation avec tous les détails de la campagne.
                   </p>
                   
                   <div className={styles.nextSteps}>
                     <h3 className={styles.nextStepsTitle}>Prochaines étapes :</h3>
                     <ul className={styles.stepsList}>
                       <li>📧 Vérifiez votre email pour la confirmation</li>
-                      <li>📱 Suivez-nous pour les mises à jour du tirage</li>
-                      <li>🎯 Le tirage aura lieu bientôt</li>
-                      <li>🚗 Livraison gratuite si vous gagnez</li>
+                      <li>📱 Suivez-nous pour les mises à jour de la campagne</li>
+                      <li>🎯 La préselection aura lieu bientôt</li>
+                      <li>🚗 Livraison gratuite</li>
                     </ul>
                   </div>
                 </div>

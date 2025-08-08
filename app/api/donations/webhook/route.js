@@ -53,9 +53,9 @@ export async function POST(req) {
 Bonjour ${donation.nom},
 
 Merci pour votre don de ${donation.montant} FCFA !
-Votre participation est confirmée et votre ticket est officiellement enregistré.
+Votre participation au concours automobiliste est confirmée.
 
-Bonne chance pour le tirage !
+Bonne Chance pour la présélection du méritant « Écomobiliste de la 1ere campagne » !
 — L’équipe Kyraco
       `.trim()
 
