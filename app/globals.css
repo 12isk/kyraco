@@ -6,6 +6,7 @@
   --snow: #FFFAFA;
   --snow-rgb: 255, 250, 250
   --color-border: #848482;
+  --menu-height: 72px; /* desktop menu height */
 }
 
 @theme inline {
@@ -19,6 +20,12 @@
   :root {
     --background: #ffffff;
     --foreground: #171717;
+  }
+}
+
+@media (max-width: 900px) {
+  :root {
+    --menu-height: 56px; /* mobile menu height */
   }
 }
 

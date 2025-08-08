@@ -161,7 +161,7 @@ function MenuInner() {
           {!isProductPage && showDesktopMenu && (
             <button className={styles.cartLink} onClick={handleCartOpen}>
               <div className={styles.cartIconWrapper}>
-                <ShoppingCart color="#ffffff" />
+                <ShoppingCart color="#ffffff" style={{mixBlendMode: 'difference'}} />
                 {cartCount>0&&(
                   <div className={styles.smallBadge}>
                     <span className={styles.smallBadgeText}>{cartCount}</span>

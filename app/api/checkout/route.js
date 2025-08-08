@@ -38,7 +38,7 @@ export async function POST(req) {
     // 2) wave session (IMPORTANT: correct key name)
     const session = await createCheckoutSession(amount, phoneNumber, {
       clientReference: orderId,                                 // ✅ correct spelling
-      successUrl: `${origin}/checkout/success?order_id=${orderId}&session_id={SESSION_ID}`,
+      successUrl: `${origin}/checkout/success?order_id=${orderId}`,
       errorUrl:   `${origin}/checkout/error?order_id=${orderId}`,
     })
 

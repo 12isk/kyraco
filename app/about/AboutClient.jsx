@@ -343,8 +343,8 @@ export default function About() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
               >
-                Participez à notre campagne de sensibilisation et tentez de gagner 
-                un véhicule électrique pour contribuer à un avenir plus vert.
+                Participez à notre campagne écoresponsable et
+                contribuez à un avenir plus vert grâce à la mobilité électrique.
               </motion.p>
               <motion.div
                 variants={fadeInUp}
@@ -359,7 +359,7 @@ export default function About() {
                     whileTap={{ scale: 0.95 }}
                   >
                     <Button className={styles.ctaButton} size="lg">
-                      Participer au tirage
+                      Participer à la campagne
                     </Button>
                   </motion.div>
                 </Link>

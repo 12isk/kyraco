@@ -33,14 +33,13 @@ export default function EcologieLanding() {
     email: "",
     profession: "",
     montant: "",
-    immatriculation: "",     // NEW (optional)
-    motivation: "",          // NEW (optional)
+    immatriculation: "",
+    motivation: "",
   })
   const [loading, setLoading] = useState(false)
 
   const formatPhoneNumber = v =>
-    v
-      .replace(/\D/g, "")
+    v.replace(/\D/g, "")
       .replace(/(\d{2})(?=\d)/g, "$1 ")
       .trim()
 
@@ -73,12 +72,9 @@ export default function EcologieLanding() {
   }
 
   const scrollToForm = () => {
-    document
-      .getElementById("participation-form")
-      ?.scrollIntoView({ behavior: "smooth" })
+    document.getElementById("participation-form")?.scrollIntoView({ behavior: "smooth" })
   }
 
-  // constants (top of file)
   const MOTIVATIONS = [
     { value: "nouveau-vehicule", label: "Je veux obtenir un nouveau véhicule" },
     { value: "ameliorer-revenus", label: "Je veux améliorer mes revenus (chauffeur, livreur, etc.)" },
@@ -91,13 +87,7 @@ export default function EcologieLanding() {
   return (
     <div className={styles.container}>
       {/* GLOBAL BACKGROUND VIDEO + OVERLAY */}
-      <video
-        className={styles.videoBackground}
-        autoPlay
-        muted
-        loop
-        playsInline
-      >
+      <video className={styles.videoBackground} autoPlay muted loop playsInline>
         <source src="/media/videos/campaign3.mp4" type="video/mp4" />
       </video>
       <div className={styles.videoBackgroundOverlay} />
@@ -128,6 +118,7 @@ export default function EcologieLanding() {
                 {[
                   { href: "#prizes", label: "Récompenses" },
                   { href: "#participation", label: "Participer" },
+                  { href: "/reglementcampagne", label: "Règlement" }, // NEW
                   { href: "#contact", label: "Contact" },
                 ].map((item, i) => (
                   <a
@@ -159,11 +150,7 @@ export default function EcologieLanding() {
                   Écomobiliste de la toute première édition de la campagne Mobilité Solidaire CI, lancée par Kyraco Holding et ses partenaires.
                   Merci pour votre geste écologique qui contribue à un avenir plus vert. 
                 </p>
-                <Button
-                  onClick={scrollToForm}
-                  className={styles.heroCta}
-                  size="lg"
-                >
+                <Button onClick={scrollToForm} className={styles.heroCta} size="lg">
                   Participer Maintenant
                 </Button>
               </div>
@@ -181,23 +168,12 @@ export default function EcologieLanding() {
               {
                 name: "Moto Électrique",
                 description: "Pour livraisons rapides",
-                image: "https://global.niu.com/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fcd9iwvgl%2Fproduction%2Fe4b10e88df2fe90fa3e941236cc95ed0dfe0484d-2500x1406.jpg%3Ffit%3Dmax%26auto%3Dformat&w=3840&q=75",
+                image:
+                  "https://global.niu.com/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fcd9iwvgl%2Fproduction%2Fe4b10e88df2fe90fa3e941236cc95ed0dfe0484d-2500x1406.jpg%3Ffit%3Dmax%26auto%3Dformat&w=3840&q=75",
               },
-              {
-                name: "Tricycle Électrique",
-                description: "Transport commercial",
-                image: "/media/images/Tricycleaveccabine.webp",
-              },
-              {
-                name: "Citadine Électrique",
-                description: "Mobilité urbaine",
-                image: "/media/images/netaaya.jpg",
-              },
-              {
-                name: "Berline Électrique",
-                description: "Confort professionnel",
-                image: "/media/images/xisu7.webp",
-              },
+              { name: "Tricycle Électrique", description: "Transport commercial", image: "/media/images/Tricycleaveccabine.webp" },
+              { name: "Citadine Électrique", description: "Mobilité urbaine", image: "/media/images/netaaya.jpg" },
+              { name: "Berline Électrique", description: "Confort professionnel", image: "/media/images/xisu7.webp" },
             ].map((vehicle, index) => (
               <div key={index} className={styles.prizeCard}>
                 <div className={styles.prizeImageContainer}>
@@ -249,20 +225,19 @@ export default function EcologieLanding() {
                 />
               </div>
 
-              {/* Email (keep) */}
+              {/* Email (optional) */}
               <div className={styles.formGroup}>
-                <Label htmlFor="email" required>E-mail</Label>
+                <Label htmlFor="email">E-mail</Label>
                 <Input
                   id="email"
                   type="email"
                   value={formData.email}
                   onChange={e => setFormData(f => ({ ...f, email: e.target.value }))}
                   placeholder="votre@email.com"
-                  
                 />
               </div>
 
-              {/* Profession (existing) */}
+              {/* Profession */}
               <div className={styles.formGroup}>
                 <Label htmlFor="profession" required>Profession</Label>
                 <Select onValueChange={value => setFormData(f => ({ ...f, profession: value }))}>
@@ -278,7 +253,7 @@ export default function EcologieLanding() {
                 </Select>
               </div>
 
-              {/* NEW: Immatriculation du dernier véhicule (optional) */}
+              {/* Immatriculation (optional) */}
               <div className={styles.formGroup}>
                 <Label htmlFor="immatriculation">Immatriculation du dernier véhicule utilisé</Label>
                 <Input
@@ -290,35 +265,29 @@ export default function EcologieLanding() {
                 />
               </div>
 
-              {/* NEW: Motivation (optional dropdown) */}
+              {/* Motivation (optional) */}
               <div className={styles.formGroup}>
                 <Label htmlFor="motivation">Pourquoi souhaitez-vous participer ?</Label>
-                  <Select
-                    value={formData.motivation || ""}
-                    onValueChange={(value) => {
-                      const item = MOTIVATIONS.find(m => m.value === value)
-                      setFormData(f => ({
-                        ...f,
-                        motivation: value,                  // code you save to DB
-                      }))
-                      
-                    }}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Sélectionnez une raison" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {MOTIVATIONS.map(m => (
-                        <SelectItem key={m.value} value={m.value}>
-                          {m.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-
+                <Select
+                  value={formData.motivation || ""}
+                  onValueChange={(value) => {
+                    setFormData(f => ({ ...f, motivation: value }))
+                  }}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sélectionnez une raison" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {MOTIVATIONS.map(m => (
+                      <SelectItem key={m.value} value={m.value}>
+                        {m.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
-              {/* Montant du don (existing) */}
+              {/* Montant du don */}
               <div className={styles.formGroup}>
                 <Label required>Montant du don</Label>
                 <RadioGroup
@@ -326,13 +295,9 @@ export default function EcologieLanding() {
                   onValueChange={value => setFormData(f => ({ ...f, montant: value }))}
                   className={styles.radioGroup}
                 >
-                  {["1","1000", "2000", "5000", "10000"].map(amount => (
+                  {["1", "1000", "2000", "5000", "10000"].map(amount => (
                     <div key={amount} className={styles.radioItem}>
-                      <RadioGroupItem
-                        value={amount}
-                        id={amount}
-                        className={styles.radioInput}
-                      />
+                      <RadioGroupItem value={amount} id={amount} className={styles.radioInput} />
                       <Label htmlFor={amount} className={styles.pillRadioButton}>
                         {amount} FCFA
                       </Label>
@@ -341,7 +306,7 @@ export default function EcologieLanding() {
                 </RadioGroup>
               </div>
 
-              {/* Pay button */}
+              {/* Pay button + consent note */}
               <div className={styles.paymentSection}>
                 <Button
                   type="submit"
@@ -351,6 +316,15 @@ export default function EcologieLanding() {
                 >
                   {loading ? "Patientez…" : "Payer avec Wave"}
                 </Button>
+
+                {/* Consent note (NEW) */}
+                <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.9)", marginTop: "0.5rem" }}>
+                  En procédant au paiement, vous acceptez le{" "}
+                  <a href="/reglementcampagne" style={{ textDecoration: "underline" }}>
+                    règlement du concours
+                  </a>.
+                </p>
+
                 <div className={`${styles.glassmorphicBadge} ${styles.securityBadge}`}>
                   <Shield size={16} className={styles.securityIcon} />
                   <span className={styles.securityText}>Paiement sécurisé</span>
@@ -411,7 +385,9 @@ export default function EcologieLanding() {
             Powered by Kyraco – Mobilité Électrique
           </p>
           <div className={styles.socialMedia}>
-            <div className={styles.socialIcon} />
+            <div className={styles.socialIcon}>
+              <img src=''/>
+            </div>
             <div className={styles.socialIcon} />
             <div className={styles.socialIcon} />
           </div>

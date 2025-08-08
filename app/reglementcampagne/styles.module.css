@@ -1,0 +1,477 @@
+/* Import Satoshi Font */
+@import url('../../css/satoshi.css');
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 25%, #bbf7d0 50%, #86efac 75%, #4ade80 100%);
+  font-family: 'Satoshi', sans-serif;
+  position: relative;
+}
+
+/* Header */
+.header {
+  
+  position: fixed;
+  top: calc(var(--menu-height) + 1rem);  
+  left: 1rem;
+  right: 1rem;
+  z-index: 50;
+}
+
+.navContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo {
+  width: 2rem;
+  height: 2rem;
+  background-color: #22c55e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoText {
+  color: white;
+  font-weight: bold;
+  font-size: 0.875rem;
+}
+
+.navTitle {
+  display: none;
+  color: #1f2937;
+  font-family: 'Satoshi-Medium', sans-serif;
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+.backButton {
+  padding: 0.5rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Glassmorphic Components */
+.glassmorphicNav {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border-radius: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.glassmorphicCard {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px);
+  border-radius: 36px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  margin-bottom: 2rem;
+}
+
+/* Main Content */
+.main {
+  padding: 8rem 1rem 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+.contentContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Hero Section */
+.heroSection {
+  margin-bottom: 3rem;
+}
+
+.heroContent {
+  text-align: center;
+}
+
+.heroIcon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.heroIcon svg {
+  color: #22c55e;
+}
+
+.pageTitle {
+  font-size: 3rem;
+  font-family: 'Satoshi-Medium', sans-serif;
+  color: #1f2937;
+  margin: 0 0 1rem 0;
+  font-weight: 700;
+}
+
+.campaignTitle {
+  font-size: 1.5rem;
+  font-family: 'Satoshi-Medium', sans-serif;
+  color: #4b5563;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+}
+
+.campaignSubtitle {
+  font-size: 1.25rem;
+  color: #22c55e;
+  font-style: italic;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Rules Container */
+.rulesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.ruleCard {
+  width: 100%;
+}
+
+.ruleHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.ruleIconContainer {
+  flex-shrink: 0;
+}
+
+.ruleIcon {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: rgba(34, 197, 94, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(34, 197, 94, 0.3);
+}
+
+.ruleIcon svg {
+  color: #22c55e;
+}
+
+.ruleTitleContainer {
+  flex: 1;
+}
+
+.ruleNumber {
+  display: block;
+  font-size: 0.875rem;
+  color: #22c55e;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ruleTitle {
+  font-size: 1.5rem;
+  font-family: 'Satoshi-Medium', sans-serif;
+  color: #1f2937;
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.ruleContent {
+  padding-left: 5rem;
+}
+
+.ruleText {
+  color: #4b5563;
+  line-height: 1.7;
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+}
+
+.ruleList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ruleListItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.bulletPoint {
+  color: #22c55e;
+  font-weight: bold;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: -0.1rem;
+}
+
+/* Notice Section */
+.noticeSection {
+  margin-top: 3rem;
+}
+
+.noticeCard {
+  background: rgba(34, 197, 94, 0.1);
+  border: 2px solid rgba(34, 197, 94, 0.3);
+  box-shadow: 0 8px 32px rgba(34, 197, 94, 0.15);
+}
+
+.noticeHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.noticeIcon {
+  color: #22c55e;
+}
+
+.noticeTitle {
+  font-size: 1.25rem;
+  font-family: 'Satoshi-Medium', sans-serif;
+  color: #1f2937;
+  margin: 0;
+  font-weight: 600;
+}
+
+.noticeText {
+  color: #4b5563;
+  line-height: 1.7;
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* CTA Section */
+.ctaSection {
+  margin-top: 3rem;
+}
+
+.ctaTitle {
+  font-size: 2rem;
+  font-family: 'Satoshi-Medium', sans-serif;
+  color: #1f2937;
+  text-align: center;
+  margin: 0 0 1rem 0;
+}
+
+.ctaDescription {
+  font-size: 1.125rem;
+  color: #4b5563;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ctaButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.participateButton {
+  background: #22c55e !important;
+  color: white !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  font-weight: bold !important;
+  box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3) !important;
+}
+
+.learnMoreButton {
+  background: rgba(255, 255, 255, 0.3) !important;
+  color: #1f2937 !important;
+  border: 2px solid rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Footer */
+.footer {
+  padding: 2rem 1rem;
+  position: relative;
+  z-index: 10;
+}
+
+.footerContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footerCopyright {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Button Styles */
+.pillButton {
+  background-color: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 36px;
+  color: #1f2937;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+}
+
+.pillButton:hover {
+  background-color: rgba(255, 255, 255, 0.35);
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .navTitle {
+    display: block;
+  }
+  
+  .pageTitle {
+    font-size: 4rem;
+  }
+  
+  .campaignTitle {
+    font-size: 1.75rem;
+  }
+  
+  .campaignSubtitle {
+    font-size: 1.5rem;
+  }
+  
+  .ctaButtons {
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .glassmorphicCard {
+    padding: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .ruleContent {
+    padding-left: 0;
+    margin-top: 1rem;
+  }
+  
+  .ruleHeader {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .ruleIcon {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pageTitle {
+    font-size: 2.5rem;
+  }
+  
+  .campaignTitle {
+    font-size: 1.25rem;
+  }
+  
+  .campaignSubtitle {
+    font-size: 1.125rem;
+  }
+  
+  .ruleTitle {
+    font-size: 1.25rem;
+  }
+  
+  .glassmorphicCard {
+    padding: 1.5rem;
+    margin: 0 0.5rem 2rem;
+  }
+  
+  .main {
+    padding: 6rem 0.5rem 2rem;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .glassmorphicNav,
+  .glassmorphicCard {
+    border: 2px solid #000;
+    background: rgba(255, 255, 255, 0.9);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .pillButton {
+    transition: none;
+  }
+  
+  .pillButton:hover {
+    transform: none;
+  }
+}
+
+/* Animation Performance */
+.glassmorphicCard,
+.pillButton {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* Print Styles */
+@media print {
+  .header,
+  .ctaSection,
+  .footer {
+    display: none;
+  }
+  
+  .container {
+    background: white;
+  }
+  
+  .glassmorphicCard {
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: none;
+  }
+  
+  .main {
+    padding: 1rem;
+  }
+}
