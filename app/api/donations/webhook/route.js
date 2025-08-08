@@ -1,9 +1,13 @@
 // app/api/donations/webhook/route.js
 import { NextResponse } from 'next/server'
-import nodemailer         from 'nodemailer'
+import crypto from 'crypto'
+import nodemailer from 'nodemailer'
 import { supabase } from '@/lib/supabase'
 
-// configure Nodemailer with Gmail App Password
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
+// Gmail App Password transport
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -12,33 +16,46 @@ const transporter = nodemailer.createTransport({
   },
 })
 
+function verifyWaveSignature(raw, signature, secret) {
+  if (!signature || !secret) return false
+  const digest = crypto.createHmac('sha256', secret).update(raw).digest('hex')
+  try {
+    return crypto.timingSafeEqual(Buffer.from(digest), Buffer.from(signature))
+  } catch {
+    return false
+  }
+}
+
 export async function POST(req) {
   try {
-    const event = await req.json()
-    console.log('[donations/webhook] Received event:', event)
+    const raw = await req.text()
+    const signature =
+      req.headers.get('wave-signature') ||
+      req.headers.get('x-wave-signature')
+    const secret = process.env.WAVE_WEBHOOK_SECRET_DONATIONS
 
+    if (!verifyWaveSignature(raw, signature, secret)) {
+      return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
+    }
+
+    const event = JSON.parse(raw)
     if (event.type !== 'checkout.session.completed') {
-      console.log('[donations/webhook] Ignoring event type:', event.type)
       return NextResponse.json({ ok: true })
     }
 
-    const sessionData  = event.data || {}
-    console.log('[donations/webhook] Session data:', sessionData)
-
-    const donationId = sessionData?.client_reference;
+    const sessionData = event.data || {}
+    const donationId = sessionData?.client_reference
     if (!donationId) {
-      console.error('[donations/webhook] Missing client_reference')
       return NextResponse.json({ error: 'Missing client_reference' }, { status: 400 })
     }
 
-    // 1) mark donation completed
-    console.log('[donations/webhook] Marking donation completed:', donationId)
+    // Mark donation completed (idempotent – if you also set status enum, only update when not completed)
     await supabase
       .from('donations')
       .update({ status: 'completed', updated_at: new Date() })
       .eq('id', donationId)
 
-    // 2) fetch donation details
+    // Fetch details and email if present
     const { data: donation, error: fetchError } = await supabase
       .from('donations')
       .select('nom, email, montant')
@@ -48,7 +65,6 @@ export async function POST(req) {
     if (fetchError) {
       console.error('[donations/webhook] Fetch donation error:', fetchError)
     } else if (donation?.email) {
-      console.log('[donations/webhook] Sending confirmation email to:', donation.email)
       const mailText = `
 Bonjour ${donation.nom},
 
@@ -59,15 +75,16 @@ Bonne Chance pour la présélection du méritant « Écomobiliste de la 1ere cam
 — L’équipe Kyraco
       `.trim()
 
-      await transporter.sendMail({
-        from: `"Kyraco" <${process.env.GMAIL_USER}>`,
-        to: donation.email,
-        subject: 'Merci pour votre don !',
-        text: mailText,
-      })
-      console.log('[donations/webhook] Confirmation email sent')
-    } else {
-      console.warn('[donations/webhook] No email address to send confirmation')
+      try {
+        await transporter.sendMail({
+          from: `"Kyraco" <${process.env.GMAIL_USER}>`,
+          to: donation.email,
+          subject: 'Merci pour votre don !',
+          text: mailText,
+        })
+      } catch (mailErr) {
+        console.error('[donations/webhook] Mail error:', mailErr)
+      }
     }
 
     return NextResponse.json({ ok: true })
