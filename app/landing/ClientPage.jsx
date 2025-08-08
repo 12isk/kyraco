@@ -360,7 +360,7 @@ useEffect(() => {
                   onValueChange={value => setFormData(f => ({ ...f, montant: value }))}
                   className={styles.radioGroup}
                 >
-                  {["1", "1000", "2000", "5000", "10000"].map(amount => (
+                  {["1000", "2000", "5000", "10000"].map(amount => (
                     <div key={amount} className={styles.radioItem}>
                       <RadioGroupItem value={amount} id={amount} className={styles.radioInput} />
                       <Label htmlFor={amount} className={styles.pillRadioButton}>
