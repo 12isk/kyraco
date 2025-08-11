@@ -153,7 +153,7 @@ useEffect(() => {
     <div className={styles.container}>
       {/* GLOBAL BACKGROUND VIDEO + OVERLAY */}
       <video className={styles.videoBackground} autoPlay muted loop playsInline>
-        <source src="/media/videos/campaign3.mp4" type="video/mp4" />
+        <source src="/media/videos/landing.mp4" type="video/mp4" />
       </video>
       <div className={styles.videoBackgroundOverlay} />
 

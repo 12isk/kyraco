@@ -12,8 +12,8 @@ export const metadata = {
     siteName: "KYRACO",
     images: [
       {
-        url: "/media/images/campaign3.jpg",
-        width: 1200,
+        url: "/media/images/campaign4.jpg",
+        width: 630,
         height: 630,
       },
     ],
@@ -22,7 +22,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Un Billet pour l'Écologie - KYRACO",
     description: "Participez et contribuez à un avenir plus vert.",
-    images: ["/media/images/campaign3.jpg"],
+    images: ["/media/images/campaign4.jpg"],
   },
 }
 
