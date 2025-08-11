@@ -13,7 +13,7 @@ export const metadata = {
     images: [
       {
         url: "/media/images/campaign4.jpg",
-        width: 630,
+        width: 1200,
         height: 630,
       },
     ],
