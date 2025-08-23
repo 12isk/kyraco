@@ -1,7 +1,6 @@
-// ...existing code...
 # KYRACO — "Un Billet pour l'Écologie"
 
-Lightweight Next.js site and campaign front-end for KYRACO (Côte d'Ivoire). Contains landing pages, campaign landing, thank-you flow, and server API routes to create payment sessions and save order state.
+Lightweight Next.js site and campaign front-end for KYRACO (Côte d'Ivoire). Contains e-commerce pages, landing pages, campaign landing, thank-you flow, and server API routes to create payment sessions and save order state.
 
 Quick links
 - App entry/layout: [app/layout.js](app/layout.js) — imports [`CartProvider`](app/CartContext.jsx) and [`Menu`](components/menu/index.jsx)
