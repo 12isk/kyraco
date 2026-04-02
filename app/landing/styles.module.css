@@ -41,8 +41,9 @@
 .videoBackground {
   position: fixed;
   top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  width: 100vw; height: 100%;
   object-fit: cover;
+  scale:1.1;
   /* opacity: 0.3; */
   z-index: -2;
 }

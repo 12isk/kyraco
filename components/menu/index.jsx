@@ -132,8 +132,15 @@ function MenuInner() {
             <div className={styles.middleContainer}>
               {!isProductPage ? (
                 <div className={styles.menuItemsWrapper}>
-                  {["Accueil","Produits","À propos", "Campagne"].map((name,i)=>(
+                  {/* {["Accueil","Produits","À propos", "Campagne"].map((name,i)=>(
                     <Link key={i} href={["/","/products","/about", "/landing"][i]} className={styles.menuItem}>
+                      {name}
+                    </Link>
+                  ))} */}
+                  {/* // removing products for portfolio display */}
+
+                  {["Accueil","À propos","Campagne"].map((name,i)=>(
+                    <Link key={i} href={["/","/about", "/landing"][i]} className={styles.menuItem}>
                       {name}
                     </Link>
                   ))}
@@ -158,7 +165,7 @@ function MenuInner() {
         {/* ===== Right Controls ===== */}
         <div className={styles.rightContainer}>
           {/* Desktop non-product: cart icon */}
-          {!isProductPage && showDesktopMenu && (
+          {/* {!isProductPage && showDesktopMenu && (
             <button className={styles.cartLink} onClick={handleCartOpen}>
               <div className={styles.cartIconWrapper}>
                 <ShoppingCart color="#ffffff" style={{mixBlendMode: 'difference'}} />
@@ -170,7 +177,8 @@ function MenuInner() {
                 
               </div>
             </button>
-          )}
+          )} */}
+          {/* // removing cart icon for portfolio display */}
 
           {/* Desktop product page: count + super-dot */}
           {isProductPage && showDesktopMenu && (

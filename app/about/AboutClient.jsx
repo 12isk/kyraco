@@ -308,7 +308,7 @@ export default function About() {
                 </motion.a>
 
                 <motion.a 
-                  href="https://www.kyraco-ci.com" 
+                  href="https://www.kyraco-ci.com/" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className={styles.contactItem}
@@ -353,7 +353,7 @@ export default function About() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.4 }}
               >
-                <Link href="/">
+                <Link href="/landing">
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

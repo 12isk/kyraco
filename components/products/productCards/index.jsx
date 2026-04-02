@@ -1,8 +1,9 @@
-import styles from './styles.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 // ProductCard.jsx
 import React, { useCallback } from 'react';
+
+import styles from './styles.module.css';
 
 const ProductCard = React.memo(({
   product,
@@ -34,17 +35,14 @@ const ProductCard = React.memo(({
         onMouseLeave={handleMouseLeave}
       >
         <div className={styles.imageContainer}>
-          {product.images && product.images.length > 0 && (
-            <Image
-              src={product.images[0]}
-              alt={product.name}
-              width={400}
-              height={400}
-              className={styles.productImage}
-              priority={false}
-            />
-          )}
-          
+          <Image
+            src={product.images[0]}
+            alt={product.name}
+            width={400}
+            height={400}
+            className={styles.productImage}
+            priority={false}
+          />
           {product.onSale && (
             <div className={styles.saleBadge}>Sale</div>
           )}

@@ -26,3 +26,4 @@ const ProductGrid = React.memo(({
 ProductGrid.displayName = 'ProductGrid';
 
 export default ProductGrid;
+

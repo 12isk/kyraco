@@ -63,16 +63,28 @@ export default function ProductPage({ product }) {
     }
   };
 
+  // Parse images safely
+  let images = [];
+  if (Array.isArray(product.images)) {
+    images = product.images;
+  } else if (typeof product.images === "string") {
+    try {
+      images = JSON.parse(product.images);
+    } catch {
+      images = [];
+    }
+  }
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>
         {/* Desktop thumbnails */}
         {!isMobile && (
           <div className={styles.thumbnails}>
-            {product.images.map((img, idx) => (
+            {(images && images.length > 0 ? images : ["/media/images/placeholder.png"]).map((img, idx) => (
               <img
                 key={idx}
-                src={img}
+                src={typeof img === 'string' && img.trim().length > 0 ? (img.startsWith('/') || img.startsWith('http') ? img : '/' + img) : '/media/images/placeholder.png'}
                 alt={`thumb-${idx}`}
                 onClick={() => setCurrentImageIndex(idx)}
                 className={`${styles.thumbnail} ${
@@ -92,12 +104,12 @@ export default function ProductPage({ product }) {
                 onScroll={handleSliderScroll}
                 className={styles.mobileSlider}
               >
-                {product.images.map((img, idx) => (
-                  <img key={idx} src={img} alt={`product-${idx}`} className={styles.mobileImage} />
+                {(images && images.length > 0 ? images : ["/media/images/placeholder.png"]).map((img, idx) => (
+                  <img key={idx} src={typeof img === 'string' && img.trim().length > 0 ? (img.startsWith('/') || img.startsWith('http') ? img : '/' + img) : '/media/images/placeholder.png'} alt={`product-${idx}`} className={styles.mobileImage} />
                 ))}
               </div>
               <div className={styles.sliderIndicators}>
-                {product.images.map((_, idx) => (
+                {(images && images.length > 0 ? images : ["/media/images/placeholder.png"]).map((_, idx) => (
                   <button
                     key={idx}
                     className={`${styles.lineIndicator} ${
@@ -111,7 +123,13 @@ export default function ProductPage({ product }) {
           ) : (
             <div className={styles.desktopImageContainer}>
               <img
-                src={product.images[currentImageIndex]}
+                src={
+                  images && images.length > 0 && typeof images[currentImageIndex] === 'string' && images[currentImageIndex].trim().length > 0
+                    ? (images[currentImageIndex].startsWith('/') || images[currentImageIndex].startsWith('http')
+                        ? images[currentImageIndex]
+                        : '/' + images[currentImageIndex])
+                    : '/media/images/placeholder.png'
+                }
                 alt="product"
                 className={styles.mainImage}
               />
