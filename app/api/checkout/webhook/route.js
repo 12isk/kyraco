@@ -7,7 +7,7 @@ export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 // HMAC(SHA256) of the raw body using your orders webhook secret
-function verifyWaveSignature(raw, signature, secret) {
+export function verifyWaveSignature(raw, signature, secret) {
   if (!signature || !secret) return false
   const digest = crypto.createHmac('sha256', secret).update(raw).digest('hex')
   try {

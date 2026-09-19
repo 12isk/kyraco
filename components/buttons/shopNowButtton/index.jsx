@@ -29,14 +29,14 @@ export default function ShopNowButton() {
         />
         <motion.button className={styles.shopNowButton}>
            <motion.span className={styles.shopNowText}
-            animate={{ color: isHovered ? '#fff' : '#000' }}
+            animate={{ color: isHovered ? '#22c55e' : '#000' }}
             transition={{
               duration: 0.3,
               delay: 0.1,
               ease: [0.87, 0, 0.13, 1]
             }}
            >
-             Acheter
+             {/* Acheter */} En savoir plus
            </motion.span>
         </motion.button>
       </motion.div>

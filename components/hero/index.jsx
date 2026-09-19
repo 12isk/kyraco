@@ -13,7 +13,7 @@ export default async function Hero() {
                 <p className={styles.heroSubtitle}>Mobilité électrique accessible pour la Côte d’Ivoire</p>
             </div>
             <div className={styles.heroButtonContainer}>
-                <Link href="/products">
+                <Link href="/about">
                 <ShopNowButton/>
                 </Link>
             </div>
